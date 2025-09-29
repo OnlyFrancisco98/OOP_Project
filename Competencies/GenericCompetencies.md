@@ -11,4 +11,7 @@ Identifies errors and proposes effective solutions during development.
 
 - **Independent Learning**:   
 Investigates and applies new tools or concepts on their own initiative.
-Collaborative Work: Cooperates with others (if applicable) to integrate ideas and improve the project.
+
+- **Collaborative Work**:   
+Cooperates with others (if applicable) to integrate ideas and improve the project.
+
