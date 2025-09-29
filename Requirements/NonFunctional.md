@@ -7,7 +7,6 @@
 
 2. **Portabilidad y Compatibilidad**
     * El sistema deberá ejecutarse como una **aplicación web** accesible desde cualquier dispositivo con conexión a internet.
-    * Debe ser **compatible con navegadores modernos** (ej. Chrome, Firefox, Edge, Safari).
     * Deberá contar con **diseño responsivo** (`Responsive Design`) para asegurar una correcta visualización y usabilidad tanto en computadoras de escritorio como en dispositivos móviles.
 
 3. **Disponibilidad**
