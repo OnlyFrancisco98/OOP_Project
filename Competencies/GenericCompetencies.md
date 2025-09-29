@@ -13,5 +13,6 @@ Identifies errors and proposes effective solutions during development.
 Investigates and applies new tools or concepts on their own initiative.
 
 - **Collaborative Work**:   
-Cooperates with others (if applicable) to integrate ideas and improve the project.
+Cooperates with others to integrate ideas and improve the project.
+
 
