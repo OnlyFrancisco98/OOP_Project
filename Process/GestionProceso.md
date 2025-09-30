@@ -12,7 +12,7 @@ Task monitoring was conducted collaboratively, with agreements documented during
 * **Shared online documents**: used to draft and centralize deliverables (requirements, artifacts, etc.).
 * **Meeting records**: each meeting generated a set of tasks with responsible members and deadlines, functioning as a monitoring log.
 
-## Meeting Log (example)
+## Meeting Log
 
 | Date       | Main Agreements                                | Responsible Members              | Resulting Product                | Deadline   |
 | ---------- | ---------------------------------------------- | -------------------------------- | -------------------------------- | ---------- |
