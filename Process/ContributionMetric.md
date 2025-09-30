@@ -9,7 +9,7 @@ For individual contribution and participation, we decided to award activities po
 |Non-Functional Requirements|4 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE,KEVIN ANTONIO CANTO DIAZ,JOSE FRANCISCO MONTERO UC|
 |Prioritization|4 pts.|- JOSE HEYNAR SANDOVAL TAMAYO|
 |Artifacts|5 pts.|- JOSE FRANCISCO MONTERO UC, KEVIN ANTONIO CANTO DIAZ |
-|Process Description|5 pts.|- Hector Adrian Rosado Yama|
+|Process Description|5 pts.|- HÉCTOR ADRIAN ROSADO YAMA|
 |Process Abstraction|3 pts.|- JOSE FRANCISCO MONTERO UC,KEVIN ANTONIO CANTO DIAZ|
 |Individual Contribution Metric|3 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE|
 |Presentation|5 pts.|- JOSE HEYNAR SANDOVAL TAMAYO, HECTOR ADRIAN ROSADO YAMA |
