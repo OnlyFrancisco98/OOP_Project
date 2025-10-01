@@ -22,9 +22,9 @@ For individual contribution and participation, we decided to award activities po
 ## Points per Member
 |Member|Total Points|
 |---|---
-|CRISTOFER ALDAIR BARRERA ESCALANTE|19 pts.
+|CRISTOFER ALDAIR BARRERA ESCALANTE|1 pts.
 |HECTOR ADRIAN ROSADO YAMA|17 pts.
 |KEVIN ANTONIO CANTO DIAZ|17 pts.
-|JOSE FRANCISCO MONTERO UC|22 pts.
+|JOSE FRANCISCO MONTERO UC|18 pts.
 |JOSE HEYNAR SANDOVAL TAMAYO|13 pts.
 
