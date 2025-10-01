@@ -96,6 +96,6 @@ OOP_Project
 ### Resources
 
 * [Rúbrica](https://alumnosuady-my.sharepoint.com/:x:/g/personal/a20203837_alumnos_uady_mx/ERaHsam9bBJKsRh5Rhs7tXUBCWV_WHjgDP7p0L7lHxz3gA?e=4K8XPs)
-* [Video](URL_AQUI)
+* [Video](https://drive.google.com/drive/folders/1Uvi05K6Qn6plTaxyvTOazLXp9vSm_osJ?usp=drive_link)
 
 ---
