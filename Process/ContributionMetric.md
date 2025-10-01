@@ -1,9 +1,10 @@
 # Contribution Metric
+
 For individual contribution and participation, we decided to award activities points on a scale of 1 to 6, with 1 being the simplest tasks and 6 being tasks with greater weight, complexity, and time.  
 
 |Actividad|Puntos Asignados|Persona Asignada|
 |--|--|--|
-|Product Description|2 pts.|- The whole team worked on it||
+|Product Description|2 pts.|- The whole team worked on it|
 |Value Proposition|2 pts.|- the whole team worked on it|
 |Functional Requirements|4 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE,KEVIN ANTONIO CANTO DIAZ,JOSE FRANCISCO MONTERO UC |
 |Non-Functional Requirements|4 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE,KEVIN ANTONIO CANTO DIAZ,JOSE FRANCISCO MONTERO UC|
@@ -17,14 +18,12 @@ For individual contribution and participation, we decided to award activities po
 |Generic Competencies|2 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE|
 |Specific Competencies|2 pts.|- CRISTOFER ALDAIR BARRERA ESCALANTE|
 
-
-
 ## Points per Member
-|Member|Total Points|
-|---|---
-|CRISTOFER ALDAIR BARRERA ESCALANTE|19 pts.
-|HECTOR ADRIAN ROSADO YAMA|17 pts.
-|KEVIN ANTONIO CANTO DIAZ|17 pts.
-|JOSE FRANCISCO MONTERO UC|18 pts.
-|JOSE HEYNAR SANDOVAL TAMAYO|13 pts.
 
+|Member|Total Points|
+|---|---|
+|CRISTOFER ALDAIR BARRERA ESCALANTE|19 pts.|
+|HECTOR ADRIAN ROSADO YAMA|17 pts.|
+|KEVIN ANTONIO CANTO DIAZ|17 pts.|
+|JOSE FRANCISCO MONTERO UC|18 pts.|
+|JOSE HEYNAR SANDOVAL TAMAYO|13 pts.|

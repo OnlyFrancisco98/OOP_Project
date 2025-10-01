@@ -28,4 +28,3 @@ During the meetings, disagreements regarding the structure or presentation of do
 ---
 
 In summary, process management focused on continuous coordination through meetings, clear task assignment, the use of collaborative tools, and the maintenance of a meeting log that facilitated team monitoring and progress tracking.
-

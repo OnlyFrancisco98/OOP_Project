@@ -1,29 +1,29 @@
-# Propuesta de Valor
+# Value Proposition
 
 ---
 
-## Digitalización del Proceso
+## Process Digitization
 
-Transformamos el actual sistema de gestión de citas basado en papel y manual en una **solución digital**. Esto permite **automatizar la recepción y gestión de solicitudes**, mejorando significativamente la eficiencia operativa de la facultad y la experiencia de los usuarios al solicitar sus citas.
+We transformed the current paper-based, manual appointment management system into a **digital solution**. This allows for **automated reception and management of requests**, significantly improving the faculty's operational efficiency and the user experience when requesting appointments.
 
-## Enfoque Personalizado (Hecho a Medida)
+## Personalized Approach (Tailor-Made)
 
-El desarrollo del *backend* se realiza **específicamente para adaptarse al *mockup* diseñado** según las necesidades y el flujo de trabajo reales de la Facultad de Psicología. Esto garantiza que la solución propuesta no solo es funcional, sino también **pertinente** y se integra perfectamente con el diseño existente.
+The backend development is done **specifically to adapt to the mockup designed** according to the actual needs and workflow of the Faculty of Psychology. This ensures that the proposed solution is not only functional but also **relevant** and integrates seamlessly with the existing design.
 
-## Base para Futura Expansión
+## Basis for Future Expansion
 
-Aunque esta es una versión inicial con alcances definidos, el sistema está diseñado con una **arquitectura robusta y escalable**. Esto facilita la **integración futura** de funcionalidades avanzadas como:
+Although this is an initial version with defined scope, the system is designed with a **robust and scalable architecture**. This facilitates the **future integration** of advanced features such as:
 
-* Conexión a bases de datos institucionales.
-* Autenticación de usuarios.
-* Paneles administrativos.
+* Connection to institutional databases.
+* User authentication.
+* Administrative panels.
 
-## Diferenciación frente a Otras Propuestas
+## Differentiation from Other Proposals
 
-A diferencia de soluciones genéricas, comerciales o externas, este producto ofrece ventajas clave:
+Unlike generic, commercial, or external solutions, this product offers key advantages:
 
-* **Hecho a Medida:** Está construido específicamente para la Facultad de Psicología de la UADY.
-* **Enfoque Concreto:** Se centra en resolver la necesidad institucional específica de la gestión de citas, sin sobrecargar con funcionalidades innecesarias.
-* **Implementación Progresiva:** Permite una adopción gradual, comenzando con éxito por el módulo fundamental de solicitud de citas.
+* **Custom-made:** It is built specifically for the UADY Faculty of Psychology.
+* **Concrete Focus:** It focuses on solving the specific institutional need for appointment management, without overloading it with unnecessary features.
+* **Progressive Implementation:** It allows for gradual adoption, starting successfully with the fundamental appointment request module.
 
 ---

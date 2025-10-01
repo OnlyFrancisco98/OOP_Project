@@ -1,34 +1,36 @@
-### **Solicitud de cita**
 
-> Como **paciente**, quiero **enviar una solicitud de cita con mis datos personales** para que la facultad de psicología pueda agendarme correctamente.
+# User Stories
 
----
+## **Appointment request**
 
-### **Validación de datos**
-
-> Como **paciente**, quiero **que el sistema valide automáticamente los campos del formulario** para asegurar que la información que proporciono sea correcta y completa.
+> As a **patient**, I want to **send an appointment request with my personal details** so that the psychology department can schedule me correctly.
 
 ---
 
-### **Confirmación de cita**
+## **Data validation**
 
-> Como **paciente**, quiero **recibir un aviso en pantalla y un correo electrónico de confirmación** para tener la seguridad de que mi cita fue registrada exitosamente.
-
----
-
-### **Código de acceso**
-
-> Como **paciente**, quiero **recibir un código de acceso único por correo electrónico** para poder consultar la información de mi cita en cualquier momento.
+> As a **patient**, I want **the system to automatically validate the form fields** to ensure that the information I provide is correct and complete.
 
 ---
 
-### **Selección de horario**
+## **Appointment confirmation**
 
-> Como **paciente**, quiero **visualizar los horarios de citas disponibles y seleccionar el que más me convenga** para poder programar mi cita según mi disponibilidad.
+> As a **patient**, I want to **receive an on-screen notification and a confirmation email** to ensure that my appointment has been successfully registered.
 
 ---
 
-### **Gestión y almacenamiento**
+## **Access code**
 
-> Como **sistema administrativo**, debo **guardar la información de cada cita en la base de datos** para mantener un registro actualizado y confiable de todas las solicitudes y confirmaciones.
+> As a **patient**, I want to **receive a unique access code by email** so that I can check my appointment information at any time.
 
+---
+
+## **Schedule selection**
+
+> As a **patient**, I want to **view the available appointment times and select the one that suits me best** so that I can schedule my appointment according to my availability.
+
+---
+
+## **Management and storage**
+
+> As an **administrative system**, I must **save each appointment's information in the database** to maintain an up-to-date and reliable record of all requests and confirmations.
