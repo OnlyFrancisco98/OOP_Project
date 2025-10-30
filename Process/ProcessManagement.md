@@ -1,30 +1,30 @@
 # Process Management
 
-During this first stage of the project, process management was carried out through a combination of face-to-face meetings and virtual video calls, where activities were organized, responsibilities were assigned, and deadlines were established.
+During this second phase of the project, process management was carried out through a combination of in-person meetings and video calls. Activities were organized, responsibilities were assigned, and deadlines were established, all of which were in line with the limited time available for the second deliverable.
 
-## Monitoring and Follow-up
+# Monitoring
 
-Task monitoring was conducted collaboratively, with agreements documented during each meeting and deliverables reviewed on a regular basis. Adapted **Scrum** principles were applied: in each meeting, completed tasks, pending activities, and potential obstacles were reviewed. Clear responsibilities were assigned according to the project checklist.
+Task monitoring was performed collaboratively, with agreements documented at each meeting and deliverables reviewed periodically. Adapted **Scrum** principles were applied: in each meeting, completed tasks, pending activities, and potential obstacles were reviewed. Clear responsibilities were assigned according to the project checklist. This helped improve project management organization, as the second deliverable started late and time was our biggest concern.
 
-## Tools Used
+# Tools Used
 
-* **Video calls and face-to-face meetings**: to discuss agreements, resolve conflicts, and coordinate workload.
-* **Shared online documents**: used to draft and centralize deliverables (requirements, artifacts, etc.).
-* **Meeting records**: each meeting generated a set of tasks with responsible members and deadlines, functioning as a monitoring log.
+* **Meeting with the Professor**: This meeting was the most important as we focused the project, considering what we can and must do to deliver it within the given timeframe.
 
-## Meeting Log
+* **Video Calls and In-Person Meetings**: Used to discuss agreements, resolve conflicts, and coordinate workload.
 
-| Date       | Main Agreements                                | Responsible Members              | Resulting Product                | Deadline   |
-| ---------- | ---------------------------------------------- | -------------------------------- | -------------------------------- | ---------- |
-| 09/15/2025 | Define activities based on the checklist       | Entire team                      | Task distribution                | 09/18/2025 |
-| 09/20/2025 | Progress on functional and non-functional reqs | Cristofer, Kevin, José Francisco | Draft of requirements            | 09/23/2025 |
-| 09/25/2025 | Progress on artifacts and process description  | Kevin, José Francisco, Héctor    | Draft artifacts, process section | 09/27/2025 |
-| 09/28/2025 | Final integration and review of documents      | Entire team                      | Consolidated document            | 09/30/2025 |
+* **Shared Online Documents**: Used to draft and centralize deliverables (requirements, artifacts, etc.).
+
+* **Meeting Minutes**: Each meeting generated a set of tasks with assigned responsibilities and deadlines, serving as a progress log.
+
+# Meeting Log
+
+| Date             | Main Agreements                                         | Responsible Members              | Resulting Product                         | Deadline |
+| -----------------| --------------------------------------------------------| -------------------------------- | --------------------------------          | ---------- |
+| 23/10/2025       | Meeting with the Professor                              | Entire Team                      | Project Focus and Course We Should Follow | 31/10/2025 |
+| 23/10/2025 | Evolution of Functional and Non-Functional Requirements | José Francisco                   | Improved Requirements Version | 25/10/2025 |
+| 25/10/2025 | Progress on Artifacts and Process Description           | Kevin, Cristrofer                | Artifact Improvements, Process Writing | 27/10/2025 |
+| 28/10/2025 | Final Integration and Document Review                   | Entire Team                      | Consolidated Document | 30/10/2025 |
 
 ## Conflict Resolution
 
-During the meetings, disagreements regarding the structure or presentation of documentation were resolved by consensus. The team agreed to prioritize clarity, consistency across sections, and compliance with established deadlines.
-
----
-
-In summary, process management focused on continuous coordination through meetings, clear task assignment, the use of collaborative tools, and the maintenance of a meeting log that facilitated team monitoring and progress tracking.
+During the meetings, disagreements regarding the structure or presentation of the documentation were resolved by consensus. The team agreed on project priorities, helping us visualize the desired approach, identifying what we could and could not accomplish, thus facilitating the project's progress for the remaining delivery time.
