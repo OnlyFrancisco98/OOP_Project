@@ -1,34 +1,23 @@
-# Functional Requirements
+# Restructuring of Functional Requirements
 
----
+Grouping the requirements based on the expected functionalities of the system, in order to better understand and organize the general flow of the system.
 
-1. **Submit an Appointment Request**
+### Initial Request Management
 
-    * Users must be able to submit an appointment request with their personal details so that the psychology department can schedule an appointment for them.
+* **RF1: Submit an appointment request.** Users must be able to submit an appointment request at a selected time with their data, in order for the appointment to be scheduled.
+* **RD2: Field validation.** The system must be able to validate each field of the form to ensure that the information entered is valid and truthful (e.g., email and phone).
 
-2. **Form Field Validation**
-    * The system must be able to **validate each field** in the form to ensure that the information entered is correct and valid (e.g., email format, phone numbers, required fields, etc.).
+### User Confirmation and Access
 
-3. **Successful Request Notification and Confirmation**
-    * The system must provide an **immediate notification** confirming the successful appointment request.
-    * Additionally, an **email must be sent to the user** with the option to **confirm the appointment** (double opt-in).
+* **RF3: Success notification.** The system must issue an immediate notification confirming the successful appointment request.
+* **RF4: Confirmation Email.** Accompanied by the confirmation notification, an email must be sent to the previously entered email address with the option to confirm the appointment.
+* **RF5: Access code.** After confirmation, an access code will be sent by email, with which the user can log into the system and view their appointment information at any time.
 
-4. **Access Code**
+### Viewing and Selecting Available Times
 
-    * After confirming the appointment by email, the user must **receive an access code** in their email.
-    * This code will allow the user to access information related to their appointment at any time.
+* **RF6: View and select available times.** When registering their appointment, the user must be able to see the available times per day, as well as select the most appropriate one for their request.
+* **RF7: Connection to the schedule.** The system must have access to the schedule database to display available times in real time.
 
-5. **Viewing and Selecting Available Times**
+### Persistence
 
-    * The user must be able to **view the available appointment times** per day.
-    * The user must be able to **select the time** that is appropriate for their request.
-
-6. **Connection to the agenda (Access to Database)**
-
-    * The system must have access to the calendar database (or schedule management system) to **display available appointment times** in real time.
-
-7. **Save Information**
-
-    * The system must **store the information** for each new appointment and request in the respective database.
-
----
+* **RF8: Save Information.** The system must be able to save all information related to each generated appointment in the database.

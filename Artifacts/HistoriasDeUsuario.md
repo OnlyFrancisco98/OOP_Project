@@ -1,36 +1,35 @@
+# User Stories – Psychology Appointment System
 
-# User Stories
+## Appointment Request
 
-## **Appointment request**
-
-> As a **patient**, I want to **send an appointment request with my personal details** so that the psychology department can schedule me correctly.
-
----
-
-## **Data validation**
-
-> As a **patient**, I want **the system to automatically validate the form fields** to ensure that the information I provide is correct and complete.
+As a **patient**, I want to **submit an appointment request including my full name, age, email, phone number, reason for consultation, and availability**, so that the psychology department can schedule my appointment accurately and efficiently.
 
 ---
 
-## **Appointment confirmation**
+## Data Validation
 
-> As a **patient**, I want to **receive an on-screen notification and a confirmation email** to ensure that my appointment has been successfully registered.
-
----
-
-## **Access code**
-
-> As a **patient**, I want to **receive a unique access code by email** so that I can check my appointment information at any time.
+As a **patient**, I want the system to **automatically validate all form fields**, including email format, phone number format, required fields, and minimum character length for the consultation reason, so that I can be sure my information is complete and correct before submission.
 
 ---
 
-## **Schedule selection**
+## Appointment Confirmation
 
-> As a **patient**, I want to **view the available appointment times and select the one that suits me best** so that I can schedule my appointment according to my availability.
+As a **patient**, I want to **receive an on-screen confirmation message and a confirmation email containing the appointment details (date, time, assigned professional, location or video link)** so that I know my request has been successfully processed.
 
 ---
 
-## **Management and storage**
+## Access Code
 
-> As an **administrative system**, I must **save each appointment's information in the database** to maintain an up-to-date and reliable record of all requests and confirmations.
+As a **patient**, I want to **receive a unique and secure access code via email** so that I can view, modify, or cancel my appointment at any time without needing to create an account.
+
+---
+
+## Schedule Selection
+
+As a **patient**, I want to **see available appointment times in real-time and choose the one that best fits my schedule**, so that I can book my appointment conveniently.
+
+---
+
+## Appointment Management and Storage
+
+As a **system administrator**, I want all appointment requests to be **stored in a structured database**, including patient information, request date, appointment status (pending, confirmed, canceled), and access code, so that I can easily manage, update, or delete appointments through an admin panel.
