@@ -1,21 +1,24 @@
 # Process Description
+During this second phase of the project, it was decided to continue using the Scrum agile methodology. This allowed the team to maintain its work pace, as they had become familiar with it during the first phase, remaining organized, defining responsibilities, and coordinating activities effectively.
 
-For the development of the website project, specifically in this first stage focused on documentation, the team established a work process based on the agile methodology **Scrum**. This approach allowed the team to stay organized, define responsibilities, and coordinate activities effectively.
-
-The team consists of five members, each assigned different tasks according to the checklist provided. To align with Scrum, the following roles were assigned:
+The team consists of five members, each of whom was assigned different tasks according to the provided checklist. To align with Scrum, the following roles were assigned:
 
 ## Scrum Roles Assignment
 
-| Team Member                            | Scrum Role       | Main Responsibility                                          |
-| -------------------------------------- | ---------------- | ------------------------------------------------------------ |
-| **Cristofer Aldair Barrera Escalante** | Development Team | Documentation of functional and non-functional requirements  |
-| **Kevin Antonio Canto Díaz**           | Development Team | Documentation of functional requirements, artifacts          |
-| **José Francisco Montero UC**          | Product Owner    | Defining requirements, ensuring alignment with project goals |
-| **José Heynar Sandoval Tamayo**        | Scrum Master     | Facilitating meetings, monitoring progress, prioritization   |
-| **Héctor Adrián Rosado Yama**          | Development Team | Process description, participation in presentation           |
+| Team Member                            | Scrum Role       | Main Responsibility                                             |
+| -------------------------------------- | ---------------- | ------------------------------------------------------------    |
+| **Cristofer Aldair Barrera Escalante** | Development Team | Process description and process monitoring                      |
+| **Kevin Antonio Canto Díaz**           | Development Team | Evolution of functional requirements and artifacts              |
+| **José Francisco Montero UC**          | Product Owner    | Evolution of requirements and alignment with project objectives |
+| **José Heynar Sandoval Tamayo**        | Scrum Master     | Facilitating Meetings and Prioritizing                          |
+| **Héctor Adrián Rosado Yama**          | Development Team | Participation in Presentations and Competitions                 |
 
-Team organization was managed through both face-to-face meetings and video calls, where planning, task distribution, and delivery times were defined. Each member had a specific responsibility, while maintaining constant collaboration to ensure alignment across all deliverables.
+During this second delivery, we improved aspects that weren't entirely clear in the previous one. One of these was the project's focus, as we defined the limits of what we can and want to do within the remaining time.
 
-The activities were carried out collaboratively and iteratively, with drafts being reviewed and refined through team feedback before the final submission. This ensured coherence among the deliverables and alignment with the overall project objectives.
+In the requirements section, improvements were made: some were redefined, others expanded, and still others discarded due to our work methodology.
 
-In conclusion, the process followed during this first stage combines the structured organization of an academic team with principles from the agile methodology **Scrum**, highlighting collaboration, continuous communication, and the adaptation of roles to achieve the required documentation deliverables.
+The activities were carried out collaboratively and iteratively, and the drafts were reviewed and refined with team feedback before the final delivery. This ensured consistency among the deliverables and their alignment with the overall project objectives.
+
+During this second delivery, small code snippets were created that will serve as drafts for the final version of the project.
+
+In conclusion, during this delivery, we defined what we can do and what our focus will be throughout the project, prioritizing the remaining time. We also improved some aspects compared to the first delivery.
