@@ -9,10 +9,8 @@ Convey ideas, information, or feelings clearly and understandably, ensuring that
 - **Problem Solving**:  
 Identifies errors and proposes effective solutions during development.
 
-- **Independent Learning**:   
-Investigates and applies new tools or concepts on their own initiative.
+- **Independent Learning**:
+tools or concepts on their own initiative.
 
-- **Collaborative Work**:   
+- **Collaborative Work**:
 Cooperates with others to integrate ideas and improve the project.
-
-

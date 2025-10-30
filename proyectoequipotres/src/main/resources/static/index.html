@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios Disponibles</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        #horarios-container { border: 1px solid #eee; padding: 10px; }
+        label { font-weight: normal; } /* Estilo para las etiquetas de los horarios */
+    </style>
+</head>
+<body>
+
+    <div id="horarios-container">
+        <h3>Horarios Disponibles</h3>
+        <p id="horario-loading">Cargando horarios...</p>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const horariosContainer = document.getElementById('horarios-container');
+            const loadingMsg = document.getElementById('horario-loading');
+
+            // --- Cargar Horarios Disponibles (RF6) ---
+            fetch('/api/citas/horarios')
+                .then(response => response.json())
+                .then(horarios => {
+                    loadingMsg.style.display = 'none'; // Ocultar "Cargando..."
+                    
+                    if (horarios.length > 0) {
+                        
+                        // El bucle 'forEach' creará una entrada por cada horario (los 4)
+                        horarios.forEach((horario, index) => {
+                            const fechaHora = new Date(horario.horaInicio).toLocaleString('es-MX', {
+                                dateStyle: 'medium', 
+                                timeStyle: 'short' 
+                            });
+
+                            const radioInput = document.createElement('input');
+                            radioInput.type = 'radio';
+                            radioInput.id = 'horario-' + horario.id;
+                            radioInput.name = 'horario';
+                            radioInput.value = horario.id;
+                            
+                            if (index === 0) {
+                                radioInput.checked = true; // Marca el primero por defecto
+                            }
+
+                            const label = document.createElement('label');
+                            label.htmlFor = 'horario-' + horario.id;
+                            label.textContent = ` ${fechaHora}`;
+
+                            // Añade el botón de radio y la etiqueta al contenedor
+                            horariosContainer.appendChild(radioInput);
+                            horariosContainer.appendChild(label);
+                            horariosContainer.appendChild(document.createElement('br')); // Un salto de línea
+                        });
+                    
+                    } else {
+                        // Mensaje si la base de datos no devuelve nada
+                        horariosContainer.innerHTML = '<p>No hay horarios disponibles en este momento.</p>';
+                    }
+                })
+                .catch(err => {
+                    loadingMsg.textContent = 'Error al cargar horarios.';
+                    console.error(err);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 # Specific Competencies
+
 - **Use of Technology**:
 Knowledge and ability to use digital technologies and programs.
 
