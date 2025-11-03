@@ -1,10 +1,5 @@
-# Specific Competencies
-
-- **Use of Technology**:
-Knowledge and ability to use digital technologies and programs.
-
-- **Technical Documentation**:
-Documentation of processes, activities, and codes in an explicit and appropriate manner.
-
-- **Time Management**:
-Organization of time for consistent work, keeping the project under daily control.
+| **Specific Competency**                                                     | **How it is promoted through the product development**                                                                                                                        |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Develop applications using the MVC architecture.**                        | Promoted by implementing requirement RF5 (access code) while dividing the project into model, view, and controller classes, following the MVC design pattern.                 |
+| **Apply software engineering principles throughout the development cycle.** | Fostered by performing analysis, design, and individual testing of each requirement (such as RF5 and RF7) before integration, ensuring structured and functional development. |
+| **Integrate automated communication features into web systems.**            | Strengthened by implementing the functionality to send the access code to the user’s email, using Java libraries to connect the system with an email service.                 |
