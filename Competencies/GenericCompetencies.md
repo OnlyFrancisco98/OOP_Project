@@ -1,6 +1,0 @@
-| **Generic Competency**                                  | **How it is promoted through the product development**                                                                                                                                |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Teamwork and effective communication.**               | Promoted through the organization of the team to divide system tasks (interface, logic, database, and testing), maintaining constant communication to properly integrate all modules. |
-| **Critical thinking and problem solving.**              | Developed by analyzing and debugging issues in the generation and sending of the access code, finding efficient solutions and adapting the code until it works correctly.             |
-| **Autonomous learning and technological adaptability.** | Strengthened by researching new tools such as JavaMail and databases, applying technical documentation to implement automated email sending and improve the system.                   |
-

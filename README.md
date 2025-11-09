@@ -1,14 +1,6 @@
 # Web Module for Appointment Scheduling (Applied for the UADY Psychology Faculty)
 
-## Second Delivery
-
-The main objective of this project is to develop the **functional backend** for the **appointment request** module of the new website of the **Faculty of Psychology at the Autonomous University of Yucatán (UADY)**.
-
-The goal is to transform the current appointment management process, which is based on paper records, into a **digital and automated solution**. The project focuses on programming the server logic that will be responsible for:
-
-* **Receiving, validating, and storing** user request data.
-* Designing the necessary **endpoints** for appointment management (creation, availability verification, etc.).
-* Establishing a **solid architectural foundation** to enable future integration with institutional databases and system expansion.
+## Third Delivery
 
 ## Sections
 
@@ -60,33 +52,6 @@ Design and abstraction models of the system.
 
 ### Project structure
 
-```plaintext
-
-OOP_Project
-├─ Artifacts
-│  ├─ HistoriasDeUsuario.md
-│  └─ UseCaseDiagram.svg
-├─ Competencies
-│  ├─ GenericCompetencies.md
-│  └─ SpecificCompetencies.md
-├─ Process
-│  ├─ ContributionMetric.md
-│  ├─ ProcessDescription.md
-│  └─ ProcessManagement.md
-├─ Product
-│  ├─ ProductDescription.md
-│  └─ ValueProposition.md
-├─ README.md
-└─ Requirements
-   ├─ AbstractionProcess
-   │  ├─ ClassDiagram.svg
-   │  └─ SequenceDiagram.svg
-   ├─ FunctionalRequirements.md
-   ├─ NonFunctional.md
-   └─ Priorization.md
-
-```
-
 ### Team Members
 
 * José Francisco Montero Uc             [LinkedIn](https://www.linkedin.com/in/francisco-montero-uc-a8a06028a)
@@ -97,7 +62,7 @@ OOP_Project
 
 ### Resources
 
-* [Rúbrica](https://alumnosuady-my.sharepoint.com/:x:/g/personal/a20203837_alumnos_uady_mx/ERaHsam9bBJKsRh5Rhs7tXUBCWV_WHjgDP7p0L7lHxz3gA?e=4K8XPs)
-* [Video](https://drive.google.com/drive/folders/1Uvi05K6Qn6plTaxyvTOazLXp9vSm_osJ?usp=drive_link)
+* [Rúbrica](#)
+* [Video](#)
 
 ---
