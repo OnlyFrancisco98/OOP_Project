@@ -16,8 +16,8 @@ public class EmailTestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Descomentar la siguiente línea para probar el envío de correos
-        // testEmailSending();
+        // Ejecutar la prueba de envío de correos al arrancar (modo file guarda los correos en disco)
+        testEmailSending();
     }
 
     /**
@@ -27,19 +27,19 @@ public class EmailTestRunner implements CommandLineRunner {
         System.out.println("\n========== INICIANDO PRUEBA DE ENVÍO DE CORREOS ==========\n");
 
         try {
-            // Prueba 1: Enviar correo de confirmación de cita
+            // Prueba 1: Enviar correo de confirmación de cita (destino proporcionado por el usuario)
             System.out.println("Prueba 1: Enviando correo de confirmación de cita...");
             emailServicio.sendConfirmationEmail(
-                "mercurialdominator@gmail.com",
-                "Juan Pérez",
-                "Fecha: 15/11/2025\nHora: 10:00 AM\nConsultorio: 301\nPsicólogo: Dr. López"
+                "a20201696@alumnos.uady.mx",
+                "Estudiante",
+                "Fecha: " + java.time.LocalDate.now().plusDays(1) + "\nHora: 10:00 AM\nConsultorio: 301"
             );
             System.out.println("✓ Correo de confirmación enviado exitosamente\n");
 
             // Prueba 2: Enviar correo simple de éxito
             System.out.println("Prueba 2: Enviando correo simple de éxito...");
             emailServicio.sendSimpleEmail(
-                "mercurialdominator@gmail.com",
+                "a20201696@alumnos.uady.mx",
                 "Cita creada con éxito",
                 "Hola,\n\nTu cita ha sido creada correctamente en nuestro sistema.\n\nSaludos,\nFacultad de Psicología UADY"
             );
