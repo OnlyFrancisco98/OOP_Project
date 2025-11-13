@@ -21,7 +21,7 @@ public class EmailServicio {
     public void sendConfirmationEmail(String to, String userName, String appointmentDetails) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("facultad.psicologia@uady.mx");
+            message.setFrom("mercurialdominator@gmail.com");
             message.setTo(to);
             message.setSubject("Confirmación de Cita");
             message.setText("Hola " + userName + ",\n\n" +
@@ -44,7 +44,7 @@ public class EmailServicio {
     public void sendSimpleEmail(String to, String subject, String body) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("facultad.psicologia@uady.mx");
+            message.setFrom("mercurialdominator@gmail.com");
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);

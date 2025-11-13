@@ -2,6 +2,7 @@ C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\mai
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\CitasApplication.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\model\entidades\Paciente.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\services\CitaServicio.java
+C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\controller\CitaProgramacionController.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\model\entidades\EstadoCita.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\services\AppointmentNotification.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\repository\HorarioRepository.java
@@ -10,5 +11,7 @@ C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\mai
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\model\entidades\HorarioDisponible.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\repository\CitaRepository.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\controller\CitasController.java
+C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\controller\CitasControllerEmailExample.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\controller\PacienteController.java
 C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\model\dto\SolicitudCitaDTO.java
+C:\Users\mercu\OneDrive\Documentos\GitHub\OOP_Project\proyectoequipotres\src\main\java\com\uady\psicologia\citas\services\EmailTestRunner.java

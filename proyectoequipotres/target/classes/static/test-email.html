@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Envío de Correo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2d2d2d;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #1e1e1e;
+            border-left: 3px solid #00ff00;
+        }
+
+        .section h2 {
+            color: #00ff00;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #3d3d3d;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        button {
+            background: #00ff00;
+            color: #1e1e1e;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 5px 10px 0;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00dd00;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .output {
+            background: #1a1a1a;
+            border: 1px solid #00aa00;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 3px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .log-success {
+            color: #00ff00;
+        }
+
+        .log-error {
+            color: #ff6b6b;
+        }
+
+        .log-info {
+            color: #ffff00;
+        }
+
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .status.waiting {
+            background: #4a4a00;
+            color: #ffff00;
+        }
+
+        .status.success {
+            background: #004400;
+            color: #00ff00;
+        }
+
+        .status.error {
+            background: #440000;
+            color: #ff6b6b;
+        }
+
+        .info-box {
+            background: #003300;
+            border: 1px solid #00ff00;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        label {
+            color: #ffff00;
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .clear-log {
+            background: #ff6b6b;
+        }
+
+        .clear-log:hover {
+            background: #ff5555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 PRUEBA DE ENVÍO DE CORREO 🧪</h1>
+
+        <div class="section">
+            <h2>📊 Estado de Configuración</h2>
+            <div class="info-box">
+                ✓ Servidor: smtp.gmail.com:587<br>
+                ✓ Protocolo: SMTP + TLS<br>
+                ✓ Remitente: mercurialdominator@gmail.com<br>
+                ⚠️ Contraseña: Verifica que esté configurada en application.properties
+            </div>
+            <div id="statusConfig" class="status waiting">⏳ Esperando prueba...</div>
+        </div>
+
+        <div class="section">
+            <h2>📧 Prueba 1: Correo Simple</h2>
+            <label>Tu correo de prueba:</label>
+            <input 
+                type="email" 
+                id="emailTest1" 
+                placeholder="tu_correo_prueba@gmail.com"
+                autocomplete="email"
+            >
+            <div class="button-group">
+                <button onclick="enviarPrueba1()">📤 Enviar Correo Simple</button>
+            </div>
+            <div id="output1" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>📅 Prueba 2: Correo de Cita (Formulario Web)</h2>
+            <label>Tu correo:</label>
+            <input 
+                type="email" 
+                id="emailTest2" 
+                placeholder="tu_correo_prueba@gmail.com"
+                autocomplete="email"
+            >
+            <div class="button-group">
+                <button onclick="enviarPrueba2()">📤 Enviar Programación de Cita</button>
+            </div>
+            <div id="output2" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>🔧 Prueba Personalizada</h2>
+            <label>Correo destinatario:</label>
+            <input 
+                type="email" 
+                id="emailPersonalizado" 
+                placeholder="destinatario@gmail.com"
+            >
+            <label>Asunto:</label>
+            <input 
+                type="text" 
+                id="asunto" 
+                placeholder="Asunto del correo"
+                value="Prueba de Envío"
+            >
+            <label>Mensaje:</label>
+            <textarea 
+                id="mensaje" 
+                placeholder="Contenido del mensaje"
+                rows="4"
+            >Este es un correo de prueba desde la aplicación de citas.</textarea>
+            <div class="button-group">
+                <button onclick="enviarPrueba3()">📤 Enviar Personalizado</button>
+            </div>
+            <div id="output3" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Consola de Pruebas</h2>
+            <div class="button-group">
+                <button class="clear-log" onclick="limpiarConsola()">🗑️ Limpiar Consola</button>
+            </div>
+            <div id="consolaGeneral" class="output"></div>
+        </div>
+
+        <div class="section info-box" style="border-color: #ffff00; background: #444400;">
+            <strong>💡 INSTRUCCIONES:</strong><br>
+            1. Ingresa tu correo de prueba en cualquiera de las pruebas<br>
+            2. Haz clic en "Enviar"<br>
+            3. Revisa tu bandeja de entrada (y SPAM)<br>
+            4. Si ves el correo → ✅ Sistema funcionando<br>
+            5. Si NO ves nada → Revisa application.properties
+        </div>
+    </div>
+
+    <script>
+        const consola = document.getElementById('consolaGeneral');
+
+        function log(mensaje, tipo = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const linea = `[${timestamp}] ${mensaje}`;
+            
+            const span = document.createElement('span');
+            span.textContent = linea + '\n';
+            
+            if (tipo === 'success') span.className = 'log-success';
+            else if (tipo === 'error') span.className = 'log-error';
+            else span.className = 'log-info';
+            
+            consola.appendChild(span);
+            consola.scrollTop = consola.scrollHeight;
+        }
+
+        function mostrarOutput(elementId, mensaje, tipo = 'info') {
+            const output = document.getElementById(elementId);
+            output.style.display = 'block';
+            output.innerHTML = '';
+            
+            const span = document.createElement('span');
+            span.textContent = mensaje;
+            if (tipo === 'success') span.className = 'log-success';
+            else if (tipo === 'error') span.className = 'log-error';
+            else span.className = 'log-info';
+            
+            output.appendChild(span);
+        }
+
+        function limpiarConsola() {
+            consola.innerHTML = '';
+            log('Consola limpiada', 'info');
+        }
+
+        async function enviarPrueba1() {
+            const email = document.getElementById('emailTest1').value;
+            
+            if (!email) {
+                alert('⚠️ Por favor ingresa un correo');
+                return;
+            }
+
+            log(`Iniciando Prueba 1: Correo Simple para ${email}`, 'info');
+            log('Enviando solicitud al servidor...', 'info');
+
+            try {
+                const response = await fetch('/api/correos/personalizado', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: email,
+                        subject: '🧪 Prueba de Envío - Aplicación de Citas',
+                        body: 'Este es un correo de prueba.\n\nSi lo recibes, ¡el sistema está funcionando correctamente! ✓'
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ ÉXITO: Correo enviado', 'success');
+                    log('Revisa tu bandeja de entrada (y SPAM)', 'success');
+                    mostrarOutput('output1', 
+                        '✅ ÉXITO\n\nCorreo enviado a: ' + email + 
+                        '\n\nRevisa tu bandeja de entrada en 1-2 minutos.\n' +
+                        'Si no lo ves, revisa la carpeta de SPAM.',
+                        'success'
+                    );
+                } else {
+                    const error = await response.json();
+                    log('❌ ERROR: ' + (error.mensaje || response.status), 'error');
+                    mostrarOutput('output1', 
+                        '❌ ERROR\n\n' + (error.mensaje || 'Error desconocido') +
+                        '\n\nVerifica que application.properties tenga la contraseña correcta.',
+                        'error'
+                    );
+                }
+            } catch (error) {
+                log('❌ ERROR DE CONEXIÓN: ' + error.message, 'error');
+                mostrarOutput('output1', 
+                    '❌ ERROR DE CONEXIÓN\n\n' + error.message +
+                    '\n\nVerifica que el servidor esté corriendo en http://localhost:8080',
+                    'error'
+                );
+            }
+        }
+
+        async function enviarPrueba2() {
+            const email = document.getElementById('emailTest2').value;
+            
+            if (!email) {
+                alert('⚠️ Por favor ingresa un correo');
+                return;
+            }
+
+            log(`Iniciando Prueba 2: Programación de Cita para ${email}`, 'info');
+            log('Enviando solicitud al servidor...', 'info');
+
+            try {
+                const response = await fetch('/api/citas/programar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+
+                if (response.ok) {
+                    log('✅ ÉXITO: Cita programada', 'success');
+                    log('Correo de confirmación enviado', 'success');
+                    mostrarOutput('output2', 
+                        '✅ ÉXITO\n\nCita programada exitosamente\n' +
+                        'Correo de confirmación enviado a: ' + email + 
+                        '\n\nRevisa tu bandeja de entrada en 1-2 minutos.',
+                        'success'
+                    );
+                } else {
+                    const error = await response.json();
+                    log('❌ ERROR: ' + (error.mensaje || response.status), 'error');
+                    mostrarOutput('output2', 
+                        '❌ ERROR\n\n' + (error.mensaje || 'Error desconocido'),
+                        'error'
+                    );
+                }
+            } catch (error) {
+                log('❌ ERROR DE CONEXIÓN: ' + error.message, 'error');
+                mostrarOutput('output2', 
+                    '❌ ERROR DE CONEXIÓN\n\n' + error.message,
+                    'error'
+                );
+            }
+        }
+
+        async function enviarPrueba3() {
+            const email = document.getElementById('emailPersonalizado').value;
+            const asunto = document.getElementById('asunto').value;
+            const mensaje = document.getElementById('mensaje').value;
+            
+            if (!email || !asunto || !mensaje) {
+                alert('⚠️ Por favor completa todos los campos');
+                return;
+            }
+
+            log(`Iniciando Prueba 3: Personalizado para ${email}`, 'info');
+            log('Asunto: ' + asunto, 'info');
+            log('Enviando solicitud al servidor...', 'info');
+
+            try {
+                const response = await fetch('/api/correos/personalizado', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: email,
+                        subject: asunto,
+                        body: mensaje
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ ÉXITO: Correo enviado', 'success');
+                    mostrarOutput('output3', 
+                        '✅ ÉXITO\n\nCorreo personalizado enviado a: ' + email,
+                        'success'
+                    );
+                } else {
+                    const error = await response.json();
+                    log('❌ ERROR: ' + (error.mensaje || response.status), 'error');
+                    mostrarOutput('output3', 
+                        '❌ ERROR\n\n' + (error.mensaje || 'Error desconocido'),
+                        'error'
+                    );
+                }
+            } catch (error) {
+                log('❌ ERROR DE CONEXIÓN: ' + error.message, 'error');
+                mostrarOutput('output3', 
+                    '❌ ERROR DE CONEXIÓN\n\n' + error.message,
+                    'error'
+                );
+            }
+        }
+
+        // Log inicial
+        window.addEventListener('load', () => {
+            log('🧪 Consola de Pruebas Iniciada', 'success');
+            log('Pruebas disponibles: Simple, Cita, Personalizado', 'info');
+            log('Servidor: http://localhost:8080', 'info');
+        });
+    </script>
+</body>
+</html>
