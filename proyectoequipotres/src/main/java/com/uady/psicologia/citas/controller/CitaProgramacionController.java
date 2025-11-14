@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/citas")
+@RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class CitaProgramacionController {
 
     @Autowired
     private EmailServicio emailServicio;
 
-    @PostMapping("/programar")
+    @PostMapping("/citas/programar")
     public ResponseEntity<?> programarCita(@RequestBody Map<String, String> request) {
         try {
             String email = request.get("email");
