@@ -2,6 +2,8 @@ package modulopsicologia.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import modulopsicologia.dto.AgendarCitaRequest;
 import modulopsicologia.dto.BuscarCitaRequest;
+import modulopsicologia.dto.CitaResponse;
+import modulopsicologia.dto.HorarioResponse;
+import modulopsicologia.dto.SolicitudResponse;
 import modulopsicologia.model.Cita;
 import modulopsicologia.model.Horario;
 import modulopsicologia.model.Paciente;
@@ -40,8 +45,18 @@ public class CitaService {
         return citaRepository.save(nuevaCita);
     }
 
-    public List<Cita> buscarMisCitas(BuscarCitaRequest request){
-        return citaRepository.findByPaciente_EmailAndPaciente_Nombre(request.getEmail(), request.getNombre());
+    public List<CitaResponse> buscarMisCitas(BuscarCitaRequest request){
+
+        // 1. Obtenemos las Entidades (como antes)
+        List<Cita> citasDesdeDB = citaRepository.buscarPorEmailYNombreDePaciente(request.getEmail(), request.getNombre());
+
+        // 2. Las convertimos a DTOs de Respuesta
+        return citasDesdeDB.stream()
+                .map(this::convertirACitaResponse) // Llama al método de arriba
+                .collect(Collectors.toList());
+
+        // Orignial       
+        //return citaRepository.findByPaciente_EmailAndPaciente_Nombre(request.getEmail(), request.getNombre());
     }
 
     public Cita encontrarCitaPorId(Long id){
@@ -51,5 +66,46 @@ public class CitaService {
         } else {
             throw new RuntimeException("Cita no encontrada con ID: " + id);
         }
+    }
+
+    // Hecho con gemini 
+    
+    private CitaResponse convertirACitaResponse(Cita cita) {
+        CitaResponse dto = new CitaResponse();
+
+        // Mapeo simple de Cita
+        dto.setCitaId(cita.getCitaId());
+        dto.setMotivoConsulta(cita.getMotivoConsulta());
+        dto.setEstadoCita(cita.getEstadoCita());
+        dto.setFechaCreacion(cita.getFechaCreacion());
+
+        // Mapeo del Paciente (evitando el bucle)
+        dto.setPacienteId(cita.getPaciente().getPacienteId());
+        dto.setPacienteNombre(cita.getPaciente().getNombre());
+        dto.setPacienteEmail(cita.getPaciente().getEmail());
+
+        // Mapeo del Horario
+        HorarioResponse horarioDto = new HorarioResponse();
+        horarioDto.setHorarioId(cita.getHorario().getHorarioId());
+        horarioDto.setFechaHoraInicio(cita.getHorario().getFechaHoraInicio());
+        horarioDto.setDuracionMinutos(cita.getHorario().getDuracionMinutos());
+        horarioDto.setEstaDisponible(cita.getHorario().isEstaDisponible());
+        dto.setHorario(horarioDto);
+
+        // Mapeo de la lista de Solicitudes
+        Set<SolicitudResponse> solicitudDtos = cita.getSolicitudes().stream()
+                .map(solicitud -> {
+                    SolicitudResponse sDto = new SolicitudResponse();
+                    sDto.setSolicitudId(solicitud.getSolicitudId());
+                    sDto.setMotivo(solicitud.getMotivo());
+                    sDto.setExplicacion(solicitud.getExplicacion());
+                    sDto.setFechaSolicitud(solicitud.getFechaSolicitud());
+                    sDto.setEstadoSolicitud(solicitud.getEstadoSolicitud());
+                    sDto.setRespuestaAdmin(solicitud.getRespuestaAdmin());
+                    return sDto;
+                }).collect(Collectors.toSet());
+        dto.setSolicitudes(solicitudDtos);
+
+        return dto;
     }
 }

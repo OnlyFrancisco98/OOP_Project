@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import modulopsicologia.dto.AgendarCitaRequest;
 import modulopsicologia.dto.BuscarCitaRequest;
+import modulopsicologia.dto.CitaResponse;
 import modulopsicologia.model.Cita;
 import modulopsicologia.service.CitaService;
 
@@ -29,9 +30,18 @@ public class CitaController {
         }
     }
 
+    
+    @PostMapping("/buscar")
+    public ResponseEntity<List<CitaResponse>> buscarMisCitas(@RequestBody BuscarCitaRequest request) {
+        List<CitaResponse> citas = citaService.buscarMisCitas(request);
+        return ResponseEntity.ok(citas);
+    }
+
+    /*
     @PostMapping("/buscar")
     public ResponseEntity<List<Cita>> buscarMisCitas(@RequestBody BuscarCitaRequest request){
         List<Cita> citas = citaService.buscarMisCitas(request);
         return ResponseEntity.ok(citas);
     }
+    */
 }
