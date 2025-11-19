@@ -1,17 +1,3 @@
-# Abstraction Process
-
-## A nivel de Datos
-
-Las tablas relacionales SQL, con sus respectivas claves foráneas, los `JOINs` complejos y en general, toda la complejidad relacionada con la base de datos. En lugar de tenerlas como parte del código, exponemos a nuestras entidades con la etiqueta (`@Entity`).
-
-Ahora obtener algo tan simple como obtener el nombre de un paciente desde una cita se realiza con una simple línea como:
-
-```java
-    cita.getPaciente().getNombre();
-```
-
----
-
 # El Proceso de Abstracción en el Sistema de Citas Psicológicas
 
 En el contexto de este proyecto (Spring Boot + JPA), el proceso de **abstracción** consiste en ocultar la complejidad de las capas inferiores para exponer interfaces limpias, seguras y fáciles de usar en las capas superiores.
@@ -108,14 +94,7 @@ Un contrato JSON limpio, plano y seguro (`Request` y `Response`).
 
 ```mermaid
 graph TD
-    User[Usuario / Frontend] -->|JSON Limpio| Controller[Controlador (API)]
-    Controller -->|DTO| Service[Servicio (Lógica)]
-    Service -->|Entidad| Repository[Repositorio (Datos)]
-    Repository -->|SQL| DB[(Base de Datos)]
-    
-    subgraph "Nivel de Abstracción"
-    Controller -- Contrato Público --> User
-    Service -- Lógica de Negocio --> Controller
-    Repository -- Acceso a Datos --> Service
-    end
-```
+    User["Usuario / Frontend"] -->|"JSON Limpio"| Controller["Controlador (API)"]
+    Controller -->|DTO| Service["Servicio (Lógica)"]
+    Service -->|Entidad| Repository["Repositorio (Datos)"]
+    Repository -->|SQL| DB[("Base de Datos")]
