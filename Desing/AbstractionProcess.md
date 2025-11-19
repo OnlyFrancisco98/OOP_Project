@@ -2,13 +2,13 @@
 
 ## A nivel de Datos
 
-Las tablas relacionales SQL, con sus respectivas claves foráneas, los 'JOINs' complejos y en general, toda la complejidad relacionada con la base de datos. En lugar de tenerlas como parte del código, exponemos a nuestras entidades con la etiqueta (`@Entity`).
+Las tablas relacionales SQL, con sus respectivas claves foráneas, los `JOINs` complejos y en general, toda la complejidad relacionada con la base de datos. En lugar de tenerlas como parte del código, exponemos a nuestras entidades con la etiqueta (`@Entity`).
 
 Ahora obtener algo tan simple como obtener el nombre de un paciente desde una cita se realiza con una simple línea como:
 
-'''java
+```java
     cita.getPaciente().getNombre();
-'''
+```
 
 ---
 
