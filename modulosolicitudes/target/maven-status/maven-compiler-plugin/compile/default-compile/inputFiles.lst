@@ -6,12 +6,15 @@
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/Main.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/repository/ReprogramacionRepository.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/repository/CitaRepository.java
+/home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/dto/CitaResponse.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/controller/CitaController.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/repository/HorarioRepository.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/controller/HorarioController.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/dto/AgendarCitaRequest.java
+/home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/dto/HorarioResponse.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/controller/ReprogramacionController.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/dto/ReprogramacionRequest.java
+/home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/dto/SolicitudResponse.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/model/Paciente.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/model/Horario.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/service/PacienteService.java
