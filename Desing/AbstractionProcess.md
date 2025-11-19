@@ -118,3 +118,4 @@ graph TD
     Service -- Lógica de Negocio --> Controller
     Repository -- Acceso a Datos --> Service
     end
+```
