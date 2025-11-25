@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import modulopsicologia.model.Horario;
 import modulopsicologia.service.HorarioService;
+import modulopsicologia.dto.HorarioResponse;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/horarios")
@@ -20,8 +22,17 @@ public class HorarioController {
     private HorarioService horarioService;
 
     @GetMapping("/disponibles") 
-    public ResponseEntity<List<Horario>> getHorariosDisponibles() {
+    public ResponseEntity<List<HorarioResponse>> getHorariosDisponibles() {
         List<Horario> horarios = horarioService.getHorariosDisponibles();
-        return ResponseEntity.ok(horarios);
+        // Map to DTO with ISO string date to avoid JS invalid date
+        List<HorarioResponse> dtos = horarios.stream().map(h -> {
+            HorarioResponse r = new HorarioResponse();
+            r.setHorarioId(h.getHorarioId());
+            r.setFechaHoraInicio(h.getFechaHoraInicio() == null ? null : h.getFechaHoraInicio().toString());
+            r.setDuracionMinutos(h.getDuracionMinutos());
+            r.setEstaDisponible(h.isEstaDisponible());
+            return r;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok().body(dtos);
     }
 }
