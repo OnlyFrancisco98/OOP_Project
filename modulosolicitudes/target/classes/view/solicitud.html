@@ -5,20 +5,22 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Solicitud de Cita - Clínica Psicológica</title>
     <style>
+            
+            a { color: inherit;text-decoration: none;}
             .material-style-select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem; background: #fff; transition: border-color 0.3s, box-shadow 0.3s; appearance: none; }
             .material-style-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2); outline: none; }
-            :root { --primary-color: #4A90E2; --secondary-color: #2C3E50; --background-color: #F8F9FA; --text-color: #333; }
+            :root { --primary-color: #4A90E2; --secondary-color: #2C3E50; --repcolor: #5e4b8b; --background-color: #F8F9FA; --text-color: #333; }
             * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
             body { background-color: var(--background-color); color: var(--text-color); }
             .container { display: flex; gap: 30px; max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-            .form-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+            .form-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(21, 33, 73, 0.619); }
             h1 { color: var(--secondary-color); margin-bottom: 15px; font-size: 2em; }
             .subtitle { color: #666; margin-bottom: 30px; font-style: italic; }
             .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 25px; }
             .full-width { grid-column: 1 / -1; }
             label { display: block; margin-bottom: 10px; font-weight: 500; color: var(--secondary-color); }
-            input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; transition: all 0.3s ease; }
-            input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); outline: none; }
+            input { width: 100%; padding: 12px; border: 1px solid #0084ff; border-radius: 8px; font-size: 1em; transition: all 0.3s ease; }
+            input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(1, 255, 221, 0.268); outline:  none; }
             small { display: block; color: #666; font-size: 0.85em; margin-top: 5px; }
             .calendar-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
             .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
@@ -32,15 +34,56 @@
             .calendar-date:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
             .calendar-date.selected { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
             .disabled { background: #f8f8f8; color: #ccc; cursor: not-allowed; }
-            .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-            .time-slot { padding: 12px; border: 1px solid #eee; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
-            .time-slot:hover { border-color: var(--primary-color); color: var(--primary-color); }
-            .time-slot.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+            .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; align-items: stretch; }
+            /* visually improved time-slot */
+            .time-slot {
+                padding: 14px 12px;
+                border-radius: 14px;
+                text-align: center;
+                cursor: pointer;
+                transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                background: linear-gradient(180deg, #c5fff3 0%, #c5fff3 100%);
+                border: 1px solid rgba(66, 107, 153, 0.545);
+                box-shadow: 0 2px 6px rgba(15, 23, 42, 0.433);
+                color: var(--secondary-color);
+                min-height: 70px;
+            }
+            .time-slot:hover { transform: translateY(-6px); box-shadow: 0 8px 22px rgba(34, 47, 62, 0.12); }
+            .time-slot .slot-date { font-size: 0.78rem; color: #64748b; text-transform: capitalize; }
+            .time-slot .slot-time { font-size: 1.05rem; font-weight: 700; color: var(--secondary-color); }
+            .time-slot .slot-meta { font-size: 0.75rem; color: #9aa6b2; }
+            .time-slot.selected { background: linear-gradient(90deg, #4A90E2 0%, #357ABD 100%); color: white; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 10px 30px rgba(53,122,189,0.28); transform: translateY(-6px) scale(1.02); }
+            @media (max-width: 900px) { .time-slots { grid-template-columns: repeat(2, 1fr); } }
+            /* UI for no slots */
+            .no-slots-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: linear-gradient(180deg,#fff 0,#fafafa 100%);
+                border-radius: 12px;
+                padding: 18px;
+                border: 1px dashed rgba(100,100,120,0.12);
+                color: #556475;
+                box-shadow: 0 4px 12px rgba(20,30,50,0.04);
+            }
+            .no-slots-card h4 { margin: 0; color: #2c3e50; font-size: 1.05rem; }
+            .no-slots-card p { margin: 0; color: #6f8496; font-size: 0.9rem; }
+            .no-slots-actions { display:flex; gap:8px; margin-top:8px; }
+            .no-slots-actions .btn { padding: 8px 12px; background: #4A90E2; color: #fff; border-radius: 10px; border: none; cursor: pointer; }
+            .no-slots-actions .btn.alt { background: transparent; color: #4A90E2; border: 1px solid rgba(74,144,226,0.15); }
             .button-group { display: flex; gap: 15px; margin-top: 30px; }
             .main-button { padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; flex: 1; }
             .submit-button { background: var(--primary-color); color: white; }
             .submit-button:hover { background: var(--secondary-color); }
-            .cancel-button { background: #e74c3c; color: white; }
+            .cancel-button { background: #bc4538; color: white; }
+            .cancel-button:hover{background: #632121e0;}
             @media (max-width: 768px) { .container { flex-direction: column; margin: 20px auto; } .form-grid { grid-template-columns: 1fr; } .calendar-grid { grid-template-columns: repeat(7, 1fr); } .time-slots { grid-template-columns: repeat(2, 1fr); } }
             @keyframes modalEntry { 0% { transform: scale(0.8) translateY(50px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
             @keyframes checkmarkAnim { 0% { stroke-dashoffset: 48; } 100% { stroke-dashoffset: 0; } }
@@ -57,6 +100,10 @@
             .credentials { background: #f8f9fa; padding: 1rem; border-radius: 0.8rem; margin: 1.2rem 0; font-size: 0.9rem; }
             .modal-button { background: #4a90e2; color: white; border: none; padding: 0.8rem 2rem; border-radius: 2rem; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; }
             .modal-button:hover { background: #357ABD; transform: translateY(-2px); }
+            .reprogramar { padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; flex: 1; }
+            .reprogramar-btn { background: var(--repcolor); color: white; }
+            .reprogramar-btn:hover{ background: #463371;}
+            .reprogramar-cita{ display: flex; gap: 15px; margin-top: 30px; }
             @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             @media (max-width: 480px) { .modal-content { padding: 1.5rem; border-radius: 1rem; } .modal-title { font-size: 1.4rem; } }
     </style>
@@ -110,8 +157,9 @@
                 <button class="main-button cancel-button" type="reset">Limpiar</button>
             </div>
             <br>
-            <div>
-                <a href="reprogramar.html">Reprogramar Cita</a>
+            <div class="reprogramar-cita">
+                <button class="reprogramar reprogramar-btn" type="button"><a href="reprogramar.html">Reprogramar Cita</a></button>
+                
             </div>
         </form>
     </div>
@@ -186,6 +234,9 @@
      */
     async function cargarHorariosDisponibles() {
         const container = document.getElementById('timeSlotsContainer');
+            // Keep the submit button disabled while loading slots and until a selection is made
+            const submitBtn = document.querySelector('.submit-button');
+            if (submitBtn) submitBtn.disabled = true;
         try {
             // URL CORREGIDA:
             const response = await fetch(`${API_BASE_URL}/horarios/disponibles`);
@@ -198,32 +249,77 @@
             container.innerHTML = ''; // Limpiar el "Cargando..."
 
             if (horarios.length === 0) {
-                 container.innerHTML = '<p>No hay horarios disponibles por el momento.</p>';
+                 // Reset selection and show a clearer, styled message when there are no available slots
+                 selectedHorarioId = null;
+                 // Disable submit to avoid accidental submissions
+                 const submitBtn = document.querySelector('.submit-button');
+                 if (submitBtn) submitBtn.disabled = true;
+
+                 container.innerHTML = `
+                    <div class="no-slots-card" role="status" aria-live="polite">
+                        <h4>Sin horarios disponibles</h4>
+                        <p>No hay horarios disponibles para la selección actual. Intenta cambiar la fecha o vuelve más tarde.</p>
+                        <div class="no-slots-actions">
+                            <button class="btn" id="refreshSlotsBtn" type="button">Reintentar</button>
+                            <button class="btn alt" id="requestReprogramBtn" type="button">Solicitar reprogramación</button>
+                        </div>
+                    </div>
+                 `;
+
+                 // Add simple interactions: re-fetch horarios or navigate to reprogram page
+                 const refreshBtn = document.getElementById('refreshSlotsBtn');
+                 if (refreshBtn) refreshBtn.addEventListener('click', () => cargarHorariosDisponibles());
+
+                 const reprogramBtn = document.getElementById('requestReprogramBtn');
+                 if (reprogramBtn) reprogramBtn.addEventListener('click', () => window.location.href = 'reprogramar.html');
+
                  return;
             }
 
-            // 2. Renderiza cada horario como un botón
+            // 2. Renderiza cada horario como un botón con fecha y hora separados
             horarios.forEach(horario => {
                 const slot = document.createElement('div');
                 slot.className = 'time-slot';
-                slot.textContent = formatarFechaHora(horario.fechaHoraInicio);
-                
-                // 3. Agrega un listener para seleccionar el horario
-                slot.addEventListener('click', () => {
-                    // Guardar el ID
+                slot.setAttribute('role', 'button');
+                slot.setAttribute('tabindex', '0');
+
+                // parseamos la fecha para separarla en fecha corta y hora
+                const dt = new Date(horario.fechaHoraInicio);
+                const dateShort = dt.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+                const timeShort = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+                const duration = horario.duracionMinutos ? `${horario.duracionMinutos} min` : '';
+
+                slot.innerHTML = `
+                    <div class="slot-date">${dateShort}</div>
+                    <div class="slot-time">${timeShort}</div>
+                    <div class="slot-meta">${duration}</div>
+                `;
+
+                // 3. Agrega listeners para selección por click y teclado
+                const selectSlot = () => {
                     selectedHorarioId = horario.horarioId;
-                    
-                    // Resaltar visualmente
                     document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
                     slot.classList.add('selected');
+                    // Enable the submit button when a slot is chosen
+                    const submitBtn = document.querySelector('.submit-button');
+                    if (submitBtn) submitBtn.disabled = false;
+                };
+
+                slot.addEventListener('click', selectSlot);
+                slot.addEventListener('keydown', (ev) => {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                        ev.preventDefault();
+                        selectSlot();
+                    }
                 });
-                
+
                 container.appendChild(slot);
             });
 
         } catch (error) {
             console.error('Error:', error);
-            container.innerHTML = '<p style="color: red;">Error al cargar horarios. Asegúrate que el backend esté corriendo.</p>';
+            container.innerHTML = '<p style="color: red;">Error al cargar horarios.</p>';
         }
     }
 
