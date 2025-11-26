@@ -11,9 +11,6 @@ import modulopsicologia.model.Reprogramacion;
 import modulopsicologia.model.Horario;
 import modulopsicologia.repository.CitaRepository;
 import modulopsicologia.repository.ReprogramacionRepository;
-import modulopsicologia.service.HorarioService;
-import modulopsicologia.service.EmailService;
-import modulopsicologia.service.PacienteService;
 
 @Service
 public class ReprogramacionService {
