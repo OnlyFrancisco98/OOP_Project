@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import modulopsicologia.dto.ReprogramacionRequest;
 import modulopsicologia.model.Reprogramacion;
 import modulopsicologia.service.ReprogramacionService;
+import modulopsicologia.dto.AprobarReprogramacionRequest;
 
 @RestController
 @RequestMapping("/api/solicitudes") // Prefijo para todas las URLs de solicitudes
@@ -27,6 +28,16 @@ public class ReprogramacionController {
             return new ResponseEntity<>(solicitud, HttpStatus.CREATED);
         } catch(RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/aprobar")
+    public ResponseEntity<?> aprobarReprogramacion(@RequestBody AprobarReprogramacionRequest request){
+        try{
+            Reprogramacion result = reprogramacionService.aprobarReprogramacion(request.getSolicitudId(), request.getNuevoHorarioId());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 

@@ -18,6 +18,8 @@ import modulopsicologia.model.Cita;
 import modulopsicologia.model.Horario;
 import modulopsicologia.model.Paciente;
 import modulopsicologia.repository.CitaRepository;
+import modulopsicologia.service.HorarioService;
+import modulopsicologia.service.EmailService;
 
 @Service
 public class CitaService {
@@ -27,6 +29,8 @@ public class CitaService {
     private PacienteService pacienteService;
     @Autowired
     private HorarioService horarioService;
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public Cita agendarCita(AgendarCitaRequest request){
@@ -34,6 +38,14 @@ public class CitaService {
         Horario horario = horarioService.validarHorario(request.getHorarioId());
         Cita citaGuardada = crearCita(request, paciente, horario);
         horarioService.marcarHorarioComoOcupado(horario);
+        // Ensure patient has a temporary password and send confirmation email
+        String contrasenaTemporal = pacienteService.asegurarContrasenaTemporal(paciente);
+        try{
+            emailService.enviarConfirmacionCita(paciente, citaGuardada, contrasenaTemporal);
+        } catch(RuntimeException e){
+            // Log and continue — we don't want mail failures to break the booking
+            System.err.println("[EmailService] Error al enviar correo de confirmacion: " + e.getMessage());
+        }
         return citaGuardada;
     }
 
@@ -87,7 +99,7 @@ public class CitaService {
         // Mapeo del Horario
         HorarioResponse horarioDto = new HorarioResponse();
         horarioDto.setHorarioId(cita.getHorario().getHorarioId());
-        horarioDto.setFechaHoraInicio(cita.getHorario().getFechaHoraInicio());
+        horarioDto.setFechaHoraInicio(cita.getHorario().getFechaHoraInicio().toString());
         horarioDto.setDuracionMinutos(cita.getHorario().getDuracionMinutos());
         horarioDto.setEstaDisponible(cita.getHorario().isEstaDisponible());
         dto.setHorario(horarioDto);

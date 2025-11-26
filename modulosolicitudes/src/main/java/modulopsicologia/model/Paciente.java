@@ -39,6 +39,9 @@ public class Paciente {
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     private OffsetDateTime fechaRegistro;
 
+    @Column(name = "contrasena_temporal")
+    private String contrasenaTemporal;
+
     @OneToMany(
         mappedBy = "paciente",
         cascade = CascadeType.ALL, // Si borro un paciente, borro sus citas

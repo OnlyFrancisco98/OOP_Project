@@ -37,4 +37,9 @@ public class HorarioService {
         horario.setEstaDisponible(false);
         horarioRepository.save(horario);
     }
+
+    public void marcarHorarioComoDisponible(Horario horario){
+        horario.setEstaDisponible(true);
+        horarioRepository.save(horario);
+    }
 }
