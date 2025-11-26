@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/model/Reprogramacion.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/service/HorarioService.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/service/ReprogramacionService.java
@@ -22,6 +23,8 @@
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/repository/PacienteRepository.java
 /home/fmontero/Documents/Ago-Dic-2025/POO2025/OOPCambranes/OOP_Project/modulosolicitudes/src/main/java/modulopsicologia/service/CitaService.java
 =======
+=======
+>>>>>>> dc73aad9866cc0de2736aa2f53be11466a7c3505
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\dto\AgendarCitaRequest.java
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\dto\TestEmailRequest.java
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\model\Paciente.java
@@ -49,4 +52,7 @@ C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modu
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\service\HorarioService.java
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\repository\HorarioRepository.java
 C:\Users\konep\Documents\GitHub\OOP_Project\modulosolicitudes\src\main\java\modulopsicologia\service\CitaService.java
+<<<<<<< HEAD
 >>>>>>> origin/TerceraEntrega
+=======
+>>>>>>> dc73aad9866cc0de2736aa2f53be11466a7c3505
