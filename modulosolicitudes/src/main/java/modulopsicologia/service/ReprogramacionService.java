@@ -78,7 +78,6 @@ public class ReprogramacionService {
         return solicitud;
     }
 
-
     private Cita validarCita(Long citaId){
         Optional<Cita> optionalCita = citaRepository.findById(citaId);
         if(optionalCita.isPresent()){
