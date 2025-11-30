@@ -34,6 +34,10 @@
             .calendar-date:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
             .calendar-date.selected { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
             .disabled { background: #f8f8f8; color: #ccc; cursor: not-allowed; }
+            /* Estilo para días CON horarios disponibles de la BD */
+            .calendar-date.available { background: linear-gradient(135deg, #e8f4fd 0%, #d4e9fc 100%); border: 2px solid var(--primary-color); color: var(--secondary-color); font-weight: 600; box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15); }
+            .calendar-date.available:hover { background: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); }
+            .calendar-date.available.selected { background: var(--secondary-color); border-color: var(--secondary-color); }
             .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; align-items: stretch; }
             /* visually improved time-slot */
             .time-slot {
@@ -216,6 +220,7 @@
     let allHorarios = []; // Almacenar todos los horarios
     let currentMonth = new Date(); // Mes actual mostrado en calendario
     let selectedDateForSlots = null; // Fecha seleccionada en el calendario
+    let backendConnected = false; // Flag para rastrear si el backend está conectado
 
     // Datos de prueba (para poder ejecutar la UI sin backend)
     function loadMockSlots() {
@@ -243,7 +248,7 @@
     }
 
     /**
-     * Renderiza 3 meses consecutivos (mes actual + 2 siguientes)
+     * Renderiza el calendario con días habilitados/deshabilitados según horarios disponibles de la BD
      */
     function renderCalendar() {
         const grid = document.getElementById('calendarGrid');
@@ -280,7 +285,14 @@
             const dateStr = cellDate.toISOString().split('T')[0];
             
             // Verificar si hay horarios para este día
-            const hasSchedule = allHorarios.some(h => h.fechaHoraInicio.startsWith(dateStr));
+            // El backend envía fechas como ISO strings, ej: "2025-12-05T09:00:00+05:00"
+            const hasSchedule = allHorarios.some(h => {
+                if (!h.fechaHoraInicio) return false;
+                // Extraer la fecha (YYYY-MM-DD) de la cadena ISO
+                const horarioDate = h.fechaHoraInicio.split('T')[0];
+                return horarioDate === dateStr;
+            });
+            
             if (!hasSchedule) {
                 dateCell.classList.add('disabled');
             }
@@ -318,7 +330,12 @@
      */
     function filterAndRenderSlots(dateStr) {
         const container = document.getElementById('timeSlotsContainer');
-        const slotsForDate = allHorarios.filter(h => h.fechaHoraInicio.startsWith(dateStr));
+        const slotsForDate = allHorarios.filter(h => {
+            if (!h.fechaHoraInicio) return false;
+            // Extraer la fecha (YYYY-MM-DD) de la cadena ISO del backend
+            const horarioDate = h.fechaHoraInicio.split('T')[0];
+            return horarioDate === dateStr;
+        });
         
         if (slotsForDate.length === 0) {
             container.innerHTML = '<p style="color: #999; text-align: center;">No hay horarios para esta fecha.</p>';
@@ -419,22 +436,25 @@
         if (submitBtn) submitBtn.disabled = true;
 
         try {
+            console.log(`Conectando al backend en: ${API_BASE_URL}/horarios/disponibles`);
             const response = await fetch(`${API_BASE_URL}/horarios/disponibles`);
             
             if (!response.ok) {
                 throw new Error(`Backend respondió con ${response.status}`);
             }
             const horarios = await response.json();
+            console.log('Horarios recibidos del backend:', horarios);
             
             // Guardar todos los horarios globalmente
             allHorarios = Array.isArray(horarios) ? horarios : [];
+            backendConnected = true;
 
             if (!Array.isArray(horarios) || horarios.length === 0) {
                 renderTimeSlots([]);
                 container.innerHTML = `
                     <div class="no-slots-card" role="status" aria-live="polite">
                         <h4>Sin horarios disponibles</h4>
-                        <p>No hay horarios disponibles. Puedes reintentar o usar datos de prueba.</p>
+                        <p>No hay horarios disponibles en la base de datos.</p>
                         <div class="no-slots-actions">
                             <button class="btn" id="refreshSlotsBtn" type="button">Reintentar</button>
                             <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
@@ -457,11 +477,13 @@
             renderCalendar();
 
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error al conectar con backend:', error);
+            backendConnected = false;
             container.innerHTML = `
                 <div class="no-slots-card" role="alert" aria-live="assertive">
                     <h4>Error al cargar horarios</h4>
-                    <p>Hubo un problema conectando con el backend. Revisa que el servidor esté corriendo en ${API_BASE_URL} y permite CORS si corresponde.</p>
+                    <p>No se pudo conectar con el backend. Asegúrate que el servidor está corriendo en <strong>${API_BASE_URL}</strong></p>
+                    <p style="font-size: 0.85rem; color: #888; margin-top: 8px;">Error: ${error.message}</p>
                     <div class="no-slots-actions">
                         <button class="btn" id="retryBtn" type="button">Reintentar</button>
                         <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
