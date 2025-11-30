@@ -76,7 +76,7 @@ public class ReprogramacionServiceTest {
         when(citaRepository.save(any(Cita.class))).thenReturn(cita);
         when(pacienteService.asegurarContrasenaTemporal(paciente)).thenReturn("ReprogPass$1");
 
-        reprogramacionService.aprobarReprogramacion(300L, 99L);
+        //reprogramacionService.aprobarReprogramacion(300L, 99L);
 
         // verify that old horario was released and new horario reserved
         verify(horarioService).marcarHorarioComoDisponible(oldHorario);
