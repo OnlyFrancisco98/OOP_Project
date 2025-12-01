@@ -21,7 +21,7 @@ For individual contribution and participation, we decided to award points to act
 | Funcionalidad de correo electrónico       | 4         | Kevin Canto, Heynar Sandoval         |
 | Organización y documentación del repositorio | 5      | Francisco Montero                    |
 | Presentación                              | 4         | Hector Rosado, Heynar Sandoval       |
-| Programación general de la página         | 5 c/u     | Todos los integrantes                |
+| Programación general                      | 5 c/u     | Todos los integrantes                |
 
 
 | Integrante          | Puntos |
@@ -31,6 +31,7 @@ For individual contribution and participation, we decided to award points to act
 | Heynar Sandoval     | 19     |
 | Kevin Canto         | 20     |
 | Francisco Montero   | 20     |
+
 
 
 
