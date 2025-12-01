@@ -1,23 +1,23 @@
-# Uso — Interacción con la aplicación
+# Usage — Application Interaction
 
-## Frontend principal
-- `src/main/resources/view/solicitud.html` es la página para solicitar una cita.
-- El calendario en la página carga horarios disponibles desde `GET /api/horarios/disponibles` y muestra los slots.
-- Al seleccionar un horario y completar el formulario, el frontend realiza `POST /api/citas` con el `horarioId` y datos del paciente.
+## Main Frontend
+- `src/main/resources/view/solicitud.html` is the page used to request an appointment.
+- The calendar on the page loads available schedules from `GET /api/horarios/disponibles` and displays the time slots.
+- When selecting a schedule and completing the form, the frontend sends `POST /api/citas` with the `horarioId` and patient information.
 
-## Flujo típico de verificación rápida
-1. Levanta la aplicación (`mvn spring-boot:run`).
-2. Abre `src/main/resources/view/solicitud.html` en el navegador (puedes abrir el archivo localmente o servirlo desde el backend si lo agregas a `resources/static`).
-3. Verifica en consola del navegador que la petición a `http://localhost:8081/api/horarios/disponibles` responde correctamente.
-4. Selecciona un horario y envía el formulario.
-5. Revisa en la consola del backend logs sobre envío de correo y persistencia.
+## Typical Quick Verification Flow
+1. Start the application (`mvn spring-boot:run`).
+2. Open `src/main/resources/view/solicitud.html` in your browser (you can open the file locally or serve it from the backend if you place it under `resources/static`).
+3. Check in the browser console that the request to `http://localhost:8081/api/horarios/disponibles` responds correctly.
+4. Select a schedule and submit the form.
+5. Review backend logs for email-sending attempts and persistence events.
 
-## Endpoint de pruebas de correo
-- `POST /api/test/email` permite probar el template de correo sin persistir datos.
+## Email Test Endpoint
+- `POST /api/test/email` allows testing the email template without persisting any data.
 
-## Comportamiento de errores
-- Si el horario ya no está disponible, el backend responde `409 Conflict` con un mensaje útil; el frontend muestra un alert con el mensaje proveniente del backend.
-- Si el `JavaMailSender` no está configurado, el servicio registra un warning y continúa con la operación principal (la cita sigue siendo creada).
+## Error Behavior
+- If the schedule is no longer available, the backend responds with `409 Conflict` and a helpful message; the frontend displays an alert with that backend message.
+- If `JavaMailSender` is not configured, the service logs a warning and continues with the main operation (the appointment is still created).
 
-## Recomendación para desarrollo del frontend
-- Sirve las vistas a través de un servidor estático o copia el HTML a `src/main/resources/static` para que se sirvan desde el mismo backend, evitando problemas de CORS en entornos más restrictivos.
+## Recommendation for Frontend Development
+- Serve the views through a static server or copy the HTML to `src/main/resources/static` so they are served by the backend, avoiding CORS issues in more restrictive environments.

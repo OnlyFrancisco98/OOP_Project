@@ -98,3 +98,12 @@ To understand how these components interact, here is the flow of the "Agendar Ci
 1.  **Separation of Concerns:** The HTML (frontend) cares only about display. The Java (backend) cares only about logic and data.
 2.  **Scalability:** You can easily add a Mobile App view later that consumes the exact same `CitaController` endpoints without changing the backend code.
 3.  **Maintainability:** Database changes (e.g., adding a column to `pacientes`) only require updates to the **Model** (`Paciente.java`) and potentially the **DTO**, without necessarily breaking the **Controller** logic.
+
+## Visual Resume
+
+```mermaid
+graph TD
+    User["Usuario / Frontend"] -->|"JSON Limpio"| Controller["Controlador (API)"]
+    Controller -->|DTO| Service["Servicio (Lógica)"]
+    Service -->|Entidad| Repository["Repositorio (Datos)"]
+    Repository -->|SQL| DB[("Base de Datos")]

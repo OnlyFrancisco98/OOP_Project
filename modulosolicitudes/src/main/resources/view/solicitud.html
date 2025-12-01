@@ -178,8 +178,6 @@
          <div class="calendar-grid" id="calendarGrid">
              <!-- Se llenará dinámicamente con JS -->
           </div>
-
-          <p style="margin-top: 20px; font-size: 0.95rem; color: #666;">Selecciona una fecha para ver horarios disponibles</p>
           
           <div class="time-slots" id="timeSlotsContainer">
               <p>Cargando horarios...</p>
@@ -217,44 +215,35 @@
     // Estado global
     let selectedHorarioId = null;
     let useMock = false;
-    let allHorarios = []; // Almacenar todos los horarios
-    let currentMonth = new Date(); // Mes actual mostrado en calendario
-    let selectedDateForSlots = null; // Fecha seleccionada en el calendario
-    let backendConnected = false; // Flag para rastrear si el backend está conectado
+    let allHorarios = []; 
+    let currentMonth = new Date(); 
+    let selectedDateForSlots = null; 
+    let backendConnected = false; 
 
-    // Datos de prueba (para poder ejecutar la UI sin backend)
+    // Datos de prueba
     function loadMockSlots() {
-        // Usar el mes mostrado en el calendario, no la fecha actual
-        const baseDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 5); // Día 5 del mes mostrado
+        const baseDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 5);
         const slots = [];
-        
-        // Generar 3 horarios para cada uno de los próximos 3 días
         for (let day = 0; day < 3; day++) {
             const dayDate = new Date(baseDate);
-            dayDate.setDate(baseDate.getDate() + day); // Días 5, 6, 7 del mes
-            dayDate.setHours(9, 0, 0, 0); // Empezar a las 9:00 AM
-            
-            // 3 horarios por día (9:00, 10:30, 12:00)
+            dayDate.setDate(baseDate.getDate() + day); 
+            dayDate.setHours(9, 0, 0, 0); 
             for (let slot = 0; slot < 3; slot++) {
                 slots.push({
                     horarioId: `m${day * 3 + slot + 1}`,
-                    fechaHoraInicio: new Date(dayDate.getTime() + slot * 90 * 60000).toISOString(), // 90 minutos entre cada uno
+                    fechaHoraInicio: new Date(dayDate.getTime() + slot * 90 * 60000).toISOString(),
                     duracionMinutos: 50
                 });
             }
         }
-        
         return slots;
     }
 
-    /**
-     * Renderiza el calendario con días habilitados/deshabilitados según horarios disponibles de la BD
-     */
+    // Renderiza el calendario
     function renderCalendar() {
         const grid = document.getElementById('calendarGrid');
         grid.innerHTML = '';
         
-        // Encabezados de días
         const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab'];
         daysOfWeek.forEach(day => {
             const dayHeader = document.createElement('div');
@@ -263,19 +252,16 @@
             grid.appendChild(dayHeader);
         });
         
-        // Primer día del mes
         const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
         const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
         const startingDayOfWeek = firstDay.getDay();
         
-        // Espacios vacíos antes del primer día
         for (let i = 0; i < startingDayOfWeek; i++) {
             const emptyCell = document.createElement('div');
             emptyCell.className = 'calendar-date disabled';
             grid.appendChild(emptyCell);
         }
         
-        // Días del mes
         for (let day = 1; day <= lastDay.getDate(); day++) {
             const dateCell = document.createElement('div');
             dateCell.className = 'calendar-date';
@@ -284,11 +270,8 @@
             const cellDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
             const dateStr = cellDate.toISOString().split('T')[0];
             
-            // Verificar si hay horarios para este día
-            // El backend envía fechas como ISO strings, ej: "2025-12-05T09:00:00+05:00"
             const hasSchedule = allHorarios.some(h => {
                 if (!h.fechaHoraInicio) return false;
-                // Extraer la fecha (YYYY-MM-DD) de la cadena ISO
                 const horarioDate = h.fechaHoraInicio.split('T')[0];
                 return horarioDate === dateStr;
             });
@@ -297,7 +280,6 @@
                 dateCell.classList.add('disabled');
             }
             
-            // Marcar si fue seleccionado
             if (selectedDateForSlots && selectedDateForSlots === dateStr) {
                 dateCell.classList.add('selected');
             }
@@ -311,28 +293,22 @@
             grid.appendChild(dateCell);
         }
         
-        // Actualizar encabezado
         const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
         document.getElementById('monthDisplay').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
     }
 
-    /**
-     * Selecciona una fecha del calendario y filtra horarios
-     */
+    // Selecciona fecha y filtra
     function selectDateInCalendar(dateStr) {
         selectedDateForSlots = dateStr;
-        renderCalendar(); // Re-renderizar para marcar la selección
-        filterAndRenderSlots(dateStr); // Mostrar horarios de ese día
+        renderCalendar(); 
+        filterAndRenderSlots(dateStr); 
     }
 
-    /**
-     * Filtra y renderiza solo los horarios de una fecha específica
-     */
+    // Filtra horarios por fecha
     function filterAndRenderSlots(dateStr) {
         const container = document.getElementById('timeSlotsContainer');
         const slotsForDate = allHorarios.filter(h => {
             if (!h.fechaHoraInicio) return false;
-            // Extraer la fecha (YYYY-MM-DD) de la cadena ISO del backend
             const horarioDate = h.fechaHoraInicio.split('T')[0];
             return horarioDate === dateStr;
         });
@@ -345,7 +321,7 @@
         renderTimeSlots(slotsForDate);
     }
 
-    // Extrae el renderizado de horarios para reusar (evita duplicar código)
+    // Renderiza las tarjetas de tiempo
     function renderTimeSlots(horarios) {
         const container = document.getElementById('timeSlotsContainer');
         container.innerHTML = '';
@@ -391,45 +367,26 @@
         });
     }
 
-    // Al cargar la página, buscar los horarios
+    // Listeners iniciales
     document.addEventListener('DOMContentLoaded', () => {
         cargarHorariosDisponibles();
         
-        // Listeners para navegación del calendario
         document.getElementById('prevMonth').addEventListener('click', () => {
             currentMonth.setMonth(currentMonth.getMonth() - 1);
-            selectedDateForSlots = null; // Limpiar la selección de fecha
+            selectedDateForSlots = null;
             renderCalendar();
             document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
         });
         
         document.getElementById('nextMonth').addEventListener('click', () => {
             currentMonth.setMonth(currentMonth.getMonth() + 1);
-            selectedDateForSlots = null; // Limpiar la selección de fecha
+            selectedDateForSlots = null;
             renderCalendar();
             document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
         });
     });
 
-    /**
-     * Formatea una fecha ISO (ej. 2025-12-01T09:00:00Z) a un formato legible
-     */
-    function formatarFechaHora(isoString) {
-        const date = new Date(isoString);
-        const options = {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        };
-        return date.toLocaleString('es-ES', options);
-    }
-
-    /**
-     * 1. Llama al endpoint GET /api/horarios/disponibles
-     */
+    // --- AQUÍ ESTÁ LA CORRECCIÓN PRINCIPAL ---
     async function cargarHorariosDisponibles() {
         const container = document.getElementById('timeSlotsContainer');
         const submitBtn = document.querySelector('.submit-button');
@@ -445,11 +402,11 @@
             const horarios = await response.json();
             console.log('Horarios recibidos del backend:', horarios);
             
-            // Guardar todos los horarios globalmente
             allHorarios = Array.isArray(horarios) ? horarios : [];
             backendConnected = true;
 
             if (!Array.isArray(horarios) || horarios.length === 0) {
+                // Caso: No hay horarios en la BD
                 renderTimeSlots([]);
                 container.innerHTML = `
                     <div class="no-slots-card" role="status" aria-live="polite">
@@ -464,16 +421,18 @@
                 document.getElementById('refreshSlotsBtn').addEventListener('click', () => cargarHorariosDisponibles());
                 document.getElementById('useMockBtn').addEventListener('click', () => {
                     useMock = true;
-                   allHorarios = loadMockSlots();
-                   renderCalendar();
-                    renderTimeSlots(allHorarios);
+                    allHorarios = loadMockSlots();
+                    renderCalendar();
+                    // Aquí tampoco mostramos todo de golpe en modo mock, pedimos seleccionar
+                    container.innerHTML = '<p style="text-align:center; color:#666;">Selecciona un día disponible (azul) para ver las horas.</p>';
                 });
             } else {
-               // Mostrar todos los horarios inicialmente
-                renderTimeSlots(horarios);
+               // CORRECCIÓN: Antes llamabas a renderTimeSlots(horarios) aquí.
+               // Ahora limpiamos el contenedor para esperar la selección del usuario.
+               container.innerHTML = ''; 
             }
             
-            // Renderizar el calendario CON LOS HORARIOS CARGADOS (para que no deshabilite incorrectamente los días)
+            // Renderizamos el calendario para que se pinten los días disponibles (azules)
             renderCalendar();
 
         } catch (error) {
@@ -482,40 +441,34 @@
             container.innerHTML = `
                 <div class="no-slots-card" role="alert" aria-live="assertive">
                     <h4>Error al cargar horarios</h4>
-                    <p>No se pudo conectar con el backend. Asegúrate que el servidor está corriendo en <strong>${API_BASE_URL}</strong></p>
-                    <p style="font-size: 0.85rem; color: #888; margin-top: 8px;">Error: ${error.message}</p>
+                    <p>No se pudo conectar con el backend.</p>
                     <div class="no-slots-actions">
                         <button class="btn" id="retryBtn" type="button">Reintentar</button>
-                        <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
+                        <button class="btn alt" id="useMockBtnError" type="button">Usar datos de prueba</button>
                     </div>
                 </div>
             `;
             const retryBtn = document.getElementById('retryBtn');
             if (retryBtn) retryBtn.addEventListener('click', () => cargarHorariosDisponibles());
-            const useMockBtn = document.getElementById('useMockBtn');
+            const useMockBtn = document.getElementById('useMockBtnError');
             if (useMockBtn) useMockBtn.addEventListener('click', () => {
                 useMock = true;
-               allHorarios = loadMockSlots();
-               renderCalendar();
-                renderTimeSlots(allHorarios);
+                allHorarios = loadMockSlots();
+                renderCalendar();
+                container.innerHTML = '<p style="text-align:center; color:#666;">Selecciona un día disponible para ver las horas.</p>';
             });
         }
     }
 
-    /**
-     * 4. Llama al endpoint POST /api/citas al enviar el formulario
-     * (URL CORREGIDA)
-     */
+    // Envío del formulario
     document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // Validar que se seleccionó un horario
         if (!selectedHorarioId) {
             alert('Por favor selecciona un horario disponible.');
             return;
         }
 
-        // 1. Recolectar TODOS los datos del formulario
         const requestData = {
             nombre: document.getElementById('nombre').value,
             email: document.getElementById('email').value,
@@ -525,56 +478,42 @@
             motivoConsulta: document.getElementById('motivo').value
         };
 
-
-        // 2. Enviar la petición POST
         try {
-            // URL CORREGIDA:
             const response = await fetch(`${API_BASE_URL}/citas`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
 
-            // Si la respuesta NO fue exitosa (ej. 409, 404, 500)
             if (!response.ok) {
-                // Leemos el mensaje de error que envió el backend
                 const errorMessage = await response.text(); 
-                // Lanzamos un error con ESE mensaje
-                throw new Error(errorMessage || 'El horario ya no está disponible o hubo un error.'); 
+                throw new Error(errorMessage || 'Error al agendar.'); 
             }
 
             const citaAgendada = await response.json();
-            console.log('Cita agendada:', citaAgendada);
-
-            // 3. Mostrar el modal de éxito
+            
             const modal = document.getElementById('confirmationModal');
-            document.getElementById('temp-email').textContent = citaAgendada.paciente.email; 
+            document.getElementById('temp-email').textContent = citaAgendada.paciente ? citaAgendada.paciente.email : document.getElementById('email').value; 
             
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
 
-            // Reiniciar animaciones del modal
             document.querySelectorAll('.checkmark__circle, .checkmark__check').forEach(el => {
                 el.style.animation = 'none';
-                void el.offsetWidth; // Trigger reflow
+                void el.offsetWidth; 
                 el.style.animation = null;
             });
 
         } catch (error) {
             console.error('Error al agendar:', error);
-            // Ahora el alert mostrará el error real del backend
             alert(`Error al agendar: ${error.message}`); 
         }
     });
 
-    // Lógica para cerrar el modal
     document.getElementById('modalClose').addEventListener('click', function () {
         document.getElementById('confirmationModal').classList.remove('show');
         setTimeout(() => {
             document.getElementById('confirmationModal').style.display = 'none';
-            // Recargar la página para ver los horarios actualizados
             window.location.reload(); 
         }, 300);
     });
