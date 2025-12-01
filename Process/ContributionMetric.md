@@ -27,12 +27,11 @@ For individual contribution and participation, we decided to award points to act
 | Integrante          | Puntos |
 |---------------------|--------|
 | Cristofer Barrera   | 17     |
-| Adrian Rosado       | 10     |
-| Adriana Rosado      | 4      |
-| Hector Rosado       | 4      |
+| Adrian Rosado       | 15     |
 | Heynar Sandoval     | 19     |
 | Kevin Canto         | 20     |
 | Francisco Montero   | 20     |
+
 
 
 
