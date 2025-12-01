@@ -34,6 +34,10 @@
             .calendar-date:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
             .calendar-date.selected { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
             .disabled { background: #f8f8f8; color: #ccc; cursor: not-allowed; }
+            /* Estilo para días CON horarios disponibles de la BD */
+            .calendar-date.available { background: linear-gradient(135deg, #e8f4fd 0%, #d4e9fc 100%); border: 2px solid var(--primary-color); color: var(--secondary-color); font-weight: 600; box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15); }
+            .calendar-date.available:hover { background: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); }
+            .calendar-date.available.selected { background: var(--secondary-color); border-color: var(--secondary-color); }
             .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; align-items: stretch; }
             /* visually improved time-slot */
             .time-slot {
@@ -166,15 +170,21 @@
 
     <div class="calendar-section">
         <div class="calendar-header">
-            <span class="current-month">Horarios Disponibles</span>
+            <button class="nav-button" id="prevMonth" type="button">‹</button>
+            <span class="current-month" id="monthDisplay">Diciembre 2024</span>
+            <button class="nav-button" id="nextMonth" type="button">›</button>
         </div>
         
-        <p>Por favor, selecciona un horario de la lista:</p>
-        
-        <div class="time-slots" id="timeSlotsContainer">
-            <p>Cargando horarios...</p>
-        </div>
-    </div>
+         <div class="calendar-grid" id="calendarGrid">
+             <!-- Se llenará dinámicamente con JS -->
+          </div>
+
+          <p style="margin-top: 20px; font-size: 0.95rem; color: #666;">Selecciona una fecha para ver horarios disponibles</p>
+          
+          <div class="time-slots" id="timeSlotsContainer">
+              <p>Cargando horarios...</p>
+          </div>
+      </div>
 </div>
 
 <div class="modal" id="confirmationModal">
@@ -206,10 +216,199 @@
 
     // Estado global
     let selectedHorarioId = null;
+    let useMock = false;
+    let allHorarios = []; // Almacenar todos los horarios
+    let currentMonth = new Date(); // Mes actual mostrado en calendario
+    let selectedDateForSlots = null; // Fecha seleccionada en el calendario
+    let backendConnected = false; // Flag para rastrear si el backend está conectado
+
+    // Datos de prueba (para poder ejecutar la UI sin backend)
+    function loadMockSlots() {
+        // Usar el mes mostrado en el calendario, no la fecha actual
+        const baseDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 5); // Día 5 del mes mostrado
+        const slots = [];
+        
+        // Generar 3 horarios para cada uno de los próximos 3 días
+        for (let day = 0; day < 3; day++) {
+            const dayDate = new Date(baseDate);
+            dayDate.setDate(baseDate.getDate() + day); // Días 5, 6, 7 del mes
+            dayDate.setHours(9, 0, 0, 0); // Empezar a las 9:00 AM
+            
+            // 3 horarios por día (9:00, 10:30, 12:00)
+            for (let slot = 0; slot < 3; slot++) {
+                slots.push({
+                    horarioId: `m${day * 3 + slot + 1}`,
+                    fechaHoraInicio: new Date(dayDate.getTime() + slot * 90 * 60000).toISOString(), // 90 minutos entre cada uno
+                    duracionMinutos: 50
+                });
+            }
+        }
+        
+        return slots;
+    }
+
+    /**
+     * Renderiza el calendario con días habilitados/deshabilitados según horarios disponibles de la BD
+     */
+    function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+        
+        // Encabezados de días
+        const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab'];
+        daysOfWeek.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'calendar-day';
+            dayHeader.textContent = day;
+            grid.appendChild(dayHeader);
+        });
+        
+        // Primer día del mes
+        const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+        const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+        const startingDayOfWeek = firstDay.getDay();
+        
+        // Espacios vacíos antes del primer día
+        for (let i = 0; i < startingDayOfWeek; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-date disabled';
+            grid.appendChild(emptyCell);
+        }
+        
+        // Días del mes
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const dateCell = document.createElement('div');
+            dateCell.className = 'calendar-date';
+            dateCell.textContent = day;
+            
+            const cellDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+            const dateStr = cellDate.toISOString().split('T')[0];
+            
+            // Verificar si hay horarios para este día
+            // El backend envía fechas como ISO strings, ej: "2025-12-05T09:00:00+05:00"
+            const hasSchedule = allHorarios.some(h => {
+                if (!h.fechaHoraInicio) return false;
+                // Extraer la fecha (YYYY-MM-DD) de la cadena ISO
+                const horarioDate = h.fechaHoraInicio.split('T')[0];
+                return horarioDate === dateStr;
+            });
+            
+            if (!hasSchedule) {
+                dateCell.classList.add('disabled');
+            }
+            
+            // Marcar si fue seleccionado
+            if (selectedDateForSlots && selectedDateForSlots === dateStr) {
+                dateCell.classList.add('selected');
+            }
+            
+            dateCell.addEventListener('click', () => {
+                if (!dateCell.classList.contains('disabled')) {
+                    selectDateInCalendar(dateStr);
+                }
+            });
+            
+            grid.appendChild(dateCell);
+        }
+        
+        // Actualizar encabezado
+        const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+        document.getElementById('monthDisplay').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    }
+
+    /**
+     * Selecciona una fecha del calendario y filtra horarios
+     */
+    function selectDateInCalendar(dateStr) {
+        selectedDateForSlots = dateStr;
+        renderCalendar(); // Re-renderizar para marcar la selección
+        filterAndRenderSlots(dateStr); // Mostrar horarios de ese día
+    }
+
+    /**
+     * Filtra y renderiza solo los horarios de una fecha específica
+     */
+    function filterAndRenderSlots(dateStr) {
+        const container = document.getElementById('timeSlotsContainer');
+        const slotsForDate = allHorarios.filter(h => {
+            if (!h.fechaHoraInicio) return false;
+            // Extraer la fecha (YYYY-MM-DD) de la cadena ISO del backend
+            const horarioDate = h.fechaHoraInicio.split('T')[0];
+            return horarioDate === dateStr;
+        });
+        
+        if (slotsForDate.length === 0) {
+            container.innerHTML = '<p style="color: #999; text-align: center;">No hay horarios para esta fecha.</p>';
+            return;
+        }
+        
+        renderTimeSlots(slotsForDate);
+    }
+
+    // Extrae el renderizado de horarios para reusar (evita duplicar código)
+    function renderTimeSlots(horarios) {
+        const container = document.getElementById('timeSlotsContainer');
+        container.innerHTML = '';
+        if (!horarios || horarios.length === 0) {
+            container.innerHTML = '<p>No hay horarios disponibles.</p>';
+            return;
+        }
+
+        horarios.forEach(horario => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot';
+            slot.setAttribute('role', 'button');
+            slot.setAttribute('tabindex', '0');
+
+            const dt = new Date(horario.fechaHoraInicio);
+            const dateShort = dt.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+            const timeShort = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const duration = horario.duracionMinutos ? `${horario.duracionMinutos} min` : '';
+
+            slot.innerHTML = `
+                <div class="slot-date">${dateShort}</div>
+                <div class="slot-time">${timeShort}</div>
+                <div class="slot-meta">${duration}</div>
+            `;
+
+            const selectSlot = () => {
+                selectedHorarioId = horario.horarioId;
+                document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+                slot.classList.add('selected');
+                const submitBtn = document.querySelector('.submit-button');
+                if (submitBtn) submitBtn.disabled = false;
+            };
+
+            slot.addEventListener('click', selectSlot);
+            slot.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    selectSlot();
+                }
+            });
+
+            container.appendChild(slot);
+        });
+    }
 
     // Al cargar la página, buscar los horarios
     document.addEventListener('DOMContentLoaded', () => {
         cargarHorariosDisponibles();
+        
+        // Listeners para navegación del calendario
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            selectedDateForSlots = null; // Limpiar la selección de fecha
+            renderCalendar();
+            document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
+        });
+        
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            selectedDateForSlots = null; // Limpiar la selección de fecha
+            renderCalendar();
+            document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
+        });
     });
 
     /**
@@ -230,99 +429,78 @@
 
     /**
      * 1. Llama al endpoint GET /api/horarios/disponibles
-     * (URL CORREGIDA)
      */
     async function cargarHorariosDisponibles() {
         const container = document.getElementById('timeSlotsContainer');
-            // Keep the submit button disabled while loading slots and until a selection is made
-            const submitBtn = document.querySelector('.submit-button');
-            if (submitBtn) submitBtn.disabled = true;
+        const submitBtn = document.querySelector('.submit-button');
+        if (submitBtn) submitBtn.disabled = true;
+
         try {
-            // URL CORREGIDA:
+            console.log(`Conectando al backend en: ${API_BASE_URL}/horarios/disponibles`);
             const response = await fetch(`${API_BASE_URL}/horarios/disponibles`);
             
             if (!response.ok) {
-                throw new Error('No se pudieron cargar los horarios.');
+                throw new Error(`Backend respondió con ${response.status}`);
             }
             const horarios = await response.json();
+            console.log('Horarios recibidos del backend:', horarios);
             
-            container.innerHTML = ''; // Limpiar el "Cargando..."
+            // Guardar todos los horarios globalmente
+            allHorarios = Array.isArray(horarios) ? horarios : [];
+            backendConnected = true;
 
-            if (horarios.length === 0) {
-                 // Reset selection and show a clearer, styled message when there are no available slots
-                 selectedHorarioId = null;
-                 // Disable submit to avoid accidental submissions
-                 const submitBtn = document.querySelector('.submit-button');
-                 if (submitBtn) submitBtn.disabled = true;
-
-                 container.innerHTML = `
+            if (!Array.isArray(horarios) || horarios.length === 0) {
+                renderTimeSlots([]);
+                container.innerHTML = `
                     <div class="no-slots-card" role="status" aria-live="polite">
                         <h4>Sin horarios disponibles</h4>
-                        <p>No hay horarios disponibles para la selección actual. Intenta cambiar la fecha o vuelve más tarde.</p>
+                        <p>No hay horarios disponibles en la base de datos.</p>
                         <div class="no-slots-actions">
                             <button class="btn" id="refreshSlotsBtn" type="button">Reintentar</button>
-                            <button class="btn alt" id="requestReprogramBtn" type="button">Solicitar reprogramación</button>
+                            <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
                         </div>
                     </div>
-                 `;
-
-                 // Add simple interactions: re-fetch horarios or navigate to reprogram page
-                 const refreshBtn = document.getElementById('refreshSlotsBtn');
-                 if (refreshBtn) refreshBtn.addEventListener('click', () => cargarHorariosDisponibles());
-
-                 const reprogramBtn = document.getElementById('requestReprogramBtn');
-                 if (reprogramBtn) reprogramBtn.addEventListener('click', () => window.location.href = 'reprogramar.html');
-
-                 return;
-            }
-
-            // 2. Renderiza cada horario como un botón con fecha y hora separados
-            horarios.forEach(horario => {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                slot.setAttribute('role', 'button');
-                slot.setAttribute('tabindex', '0');
-
-                // parseamos la fecha para separarla en fecha corta y hora
-                const dt = new Date(horario.fechaHoraInicio);
-                const dateShort = dt.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
-                const timeShort = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-                const duration = horario.duracionMinutos ? `${horario.duracionMinutos} min` : '';
-
-                slot.innerHTML = `
-                    <div class="slot-date">${dateShort}</div>
-                    <div class="slot-time">${timeShort}</div>
-                    <div class="slot-meta">${duration}</div>
                 `;
-
-                // 3. Agrega listeners para selección por click y teclado
-                const selectSlot = () => {
-                    selectedHorarioId = horario.horarioId;
-                    document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
-                    slot.classList.add('selected');
-                    // Enable the submit button when a slot is chosen
-                    const submitBtn = document.querySelector('.submit-button');
-                    if (submitBtn) submitBtn.disabled = false;
-                };
-
-                slot.addEventListener('click', selectSlot);
-                slot.addEventListener('keydown', (ev) => {
-                    if (ev.key === 'Enter' || ev.key === ' ') {
-                        ev.preventDefault();
-                        selectSlot();
-                    }
+                document.getElementById('refreshSlotsBtn').addEventListener('click', () => cargarHorariosDisponibles());
+                document.getElementById('useMockBtn').addEventListener('click', () => {
+                    useMock = true;
+                   allHorarios = loadMockSlots();
+                   renderCalendar();
+                    renderTimeSlots(allHorarios);
                 });
-
-                container.appendChild(slot);
-            });
+            } else {
+               // Mostrar todos los horarios inicialmente
+                renderTimeSlots(horarios);
+            }
+            
+            // Renderizar el calendario CON LOS HORARIOS CARGADOS (para que no deshabilite incorrectamente los días)
+            renderCalendar();
 
         } catch (error) {
-            console.error('Error:', error);
-            container.innerHTML = '<p style="color: red;">Error al cargar horarios.</p>';
+            console.error('Error al conectar con backend:', error);
+            backendConnected = false;
+            container.innerHTML = `
+                <div class="no-slots-card" role="alert" aria-live="assertive">
+                    <h4>Error al cargar horarios</h4>
+                    <p>No se pudo conectar con el backend. Asegúrate que el servidor está corriendo en <strong>${API_BASE_URL}</strong></p>
+                    <p style="font-size: 0.85rem; color: #888; margin-top: 8px;">Error: ${error.message}</p>
+                    <div class="no-slots-actions">
+                        <button class="btn" id="retryBtn" type="button">Reintentar</button>
+                        <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
+                    </div>
+                </div>
+            `;
+            const retryBtn = document.getElementById('retryBtn');
+            if (retryBtn) retryBtn.addEventListener('click', () => cargarHorariosDisponibles());
+            const useMockBtn = document.getElementById('useMockBtn');
+            if (useMockBtn) useMockBtn.addEventListener('click', () => {
+                useMock = true;
+               allHorarios = loadMockSlots();
+               renderCalendar();
+                renderTimeSlots(allHorarios);
+            });
         }
     }
-
 
     /**
      * 4. Llama al endpoint POST /api/citas al enviar el formulario
