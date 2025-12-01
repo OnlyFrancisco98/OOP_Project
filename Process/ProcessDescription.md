@@ -1,21 +1,30 @@
-# Process Description
+# ProcessDescription
 
-For the development of the website project, specifically in this first stage focused on documentation, the team established a work process based on the agile methodology **Scrum**. This approach allowed the team to stay organized, define responsibilities, and coordinate activities effectively.
+During this final delivery, the sprints and their respective durations were carried out differently, as the backlog was used to store the available tasks. In this delivery, each team member focused on their assigned tasks, which were chosen based on their strengths, making it easier for them to complete them within the delivery timeframe. The delivery was divided into three sprints.
 
-The team consists of five members, each assigned different tasks according to the checklist provided. To align with Scrum, the following roles were assigned:
+The first phase, from November 10th to 16th, involved the following tasks:
+- Competencies
+- Artifact Refinement
+- RF/RNF Verification
+- Presentation Formatting
 
-## Scrum Roles Assignment
+The second phase, from November 17th to 23rd, involved the following tasks:
+- Contribution Metrics
+- Process Description
+- Process Management
+- Requirements Evolution
 
-| Team Member                            | Scrum Role       | Main Responsibility                                          |
-| -------------------------------------- | ---------------- | ------------------------------------------------------------ |
-| **Cristofer Aldair Barrera Escalante** | Development Team | Documentation of functional and non-functional requirements  |
-| **Kevin Antonio Canto Díaz**           | Development Team | Documentation of functional requirements, artifacts          |
-| **José Francisco Montero UC**          | Product Owner    | Defining requirements, ensuring alignment with project goals |
-| **José Heynar Sandoval Tamayo**        | Scrum Master     | Facilitating meetings, monitoring progress, prioritization   |
-| **Héctor Adrián Rosado Yama**          | Development Team | Process description, participation in presentation           |
+The third phase, from November 23rd to 30th, involved the following tasks:
+- Areas for Improvement
+- Product Evolution
+- Adding Field Verification
+- Application Deployment
 
-Team organization was managed through both face-to-face meetings and video calls, where planning, task distribution, and delivery times were defined. Each member had a specific responsibility, while maintaining constant collaboration to ensure alignment across all deliverables.
-
-The activities were carried out collaboratively and iteratively, with drafts being reviewed and refined through team feedback before the final submission. This ensured coherence among the deliverables and alignment with the overall project objectives.
-
-In conclusion, the process followed during this first stage combines the structured organization of an academic team with principles from the agile methodology **Scrum**, highlighting collaboration, continuous communication, and the adaptation of roles to achieve the required documentation deliverables.
+There were also tasks for which the time required was not recorded, as these were the most difficult and for which no estimated time was available. These included:
+- Use of MVC
+- Creation and deployment of the database
+- Abstraction process
+- Adding email functionality
+- Organization and documentation of the repository
+  
+<img width="1840" height="716" alt="image" src="https://github.com/user-attachments/assets/5e529590-8caa-44dd-b75a-8bf88a864b4f" />
