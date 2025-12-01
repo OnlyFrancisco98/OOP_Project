@@ -18,9 +18,11 @@ Objetos Java (`@Entity`) con relaciones orientadas a objetos.
     `SELECT p.nombre FROM citas c JOIN pacientes p ON c.paciente_id = p.id WHERE...`
 * **Tu Abstracción (`Cita.java`):**
     Hibernate convierte esa complejidad relacional en una navegación simple de objetos:
+
     ```java
     cita.getPaciente().getNombre();
     ```
+
     **Resultado:** Transformamos un problema de Base de Datos Relacional en un modelo de Programación Orientada a Objetos.
 
 ---
@@ -36,10 +38,12 @@ Interfaces simples con métodos semánticos (`JpaRepository`).
 * **Antes de la abstracción:** Tendrías que escribir cientos de líneas de código "boilerplate" para abrir conexiones, ejecutar queries y mapear resultados manualmente.
 * **Tu Abstracción (`CitaRepository`):**
     Tú defines el *qué* quieres hacer, y Spring Data implementa el *cómo*:
+
     ```java
     // Tú declaras la intención, Spring genera el SQL automáticamente
     List<Cita> buscarPorEmailYNombreDePaciente(String email, String nombre);
     ```
+
     **Resultado:** Accedes a la base de datos como si fuera una simple colección en memoria, olvidándote del lenguaje SQL.
 
 ---
@@ -53,17 +57,20 @@ La complejidad de las reglas de negocio, validaciones múltiples, transacciones 
 Un único método público que realiza una operación atómica.
 
 * **El detalle complejo:** Para agendar una cita correctamente, el sistema debe:
-    1.  Validar si el horario existe.
-    2.  Verificar si el horario está libre.
-    3.  Buscar al paciente o crearlo si no existe.
-    4.  Crear la cita.
-    5.  Marcar el horario como ocupado.
-    6.  Guardar todo o hacer *rollback* si algo falla.
+
+    1. Validar si el horario existe.
+    2. Verificar si el horario está libre.
+    3. Buscar al paciente o crearlo si no existe.
+    4. Crear la cita.
+    5. Marcar el horario como ocupado.
+    6. Guardar todo o hacer *rollback* si algo falla.
 * **Tu Abstracción (`CitaService`):**
     El Controlador no sabe nada de esta lógica. Solo ve y utiliza un método limpio:
+
     ```java
     citaService.agendarCita(request);
     ```
+
     **Resultado:** Encapsulamiento total de la lógica. Si las reglas de negocio cambian, el resto del sistema (Controladores/Frontend) no se ve afectado.
 
 ---
@@ -79,6 +86,7 @@ Un contrato JSON limpio, plano y seguro (`Request` y `Response`).
 * **El problema (Sin abstracción):** Exponer la Entidad `Cita` directamente al exterior provocaba errores `500 Internal Server Error` debido a que la herramienta de JSON (Jackson) no podía serializar los proxies complejos de Hibernate.
 * **Tu Abstracción (`CitaResponse`):**
     Creamos una clase intermedia que actúa como el "Menú" para el cliente, separada del "Inventario" (Entidad).
+
     ```java
     public CitaResponse convertirACitaResponse(Cita cita) {
         // Traduce de la Entidad compleja al DTO simple
@@ -86,6 +94,7 @@ Un contrato JSON limpio, plano y seguro (`Request` y `Response`).
         return dto;
     }
     ```
+
     **Resultado:** Desacoplamiento total entre la Base de Datos y la Interfaz de Usuario (Frontend). Esto permite cambiar la estructura interna de la BD sin romper la aplicación web, siempre que el DTO se mantenga igual.
 
 ---

@@ -18,8 +18,6 @@ import modulopsicologia.model.Cita;
 import modulopsicologia.model.Horario;
 import modulopsicologia.model.Paciente;
 import modulopsicologia.repository.CitaRepository;
-import modulopsicologia.service.HorarioService;
-import modulopsicologia.service.EmailService;
 
 @Service
 public class CitaService {
@@ -43,7 +41,6 @@ public class CitaService {
         try{
             emailService.enviarConfirmacionCita(paciente, citaGuardada, contrasenaTemporal);
         } catch(RuntimeException e){
-            // Log and continue — we don't want mail failures to break the booking
             System.err.println("[EmailService] Error al enviar correo de confirmacion: " + e.getMessage());
         }
         return citaGuardada;
@@ -54,6 +51,7 @@ public class CitaService {
         nuevaCita.setPaciente(paciente);
         nuevaCita.setHorario(horario);
         nuevaCita.setMotivoConsulta(request.getMotivoConsulta());
+        System.out.println("INTENTANDO GUARDAR CITA..." + nuevaCita.toString());
         return citaRepository.save(nuevaCita);
     }
 
@@ -79,8 +77,6 @@ public class CitaService {
             throw new RuntimeException("Cita no encontrada con ID: " + id);
         }
     }
-
-    // Hecho con gemini 
     
     private CitaResponse convertirACitaResponse(Cita cita) {
         CitaResponse dto = new CitaResponse();
