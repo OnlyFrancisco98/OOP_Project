@@ -4,6 +4,7 @@
 # -----------------------------
 
 # --- Java / Maven ---
+target/
 **/target/
 **/target/**
 .mvn/wrapper/maven-wrapper.jar
