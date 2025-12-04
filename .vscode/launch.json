@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Main<modulosolicitudes>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "modulopsicologia.Main",
+            "projectName": "modulosolicitudes",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

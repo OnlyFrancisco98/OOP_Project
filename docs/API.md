@@ -1,16 +1,16 @@
-# API — Módulo de Solicitudes de Cita
+# API — Appointment Requests Module
 
-Documentación de los endpoints expuestos por el módulo `modulosolicitudes`.
+Documentation of the endpoints exposed by the `modulosolicitudes` module.
 
-Base URL (por defecto en este proyecto): `http://localhost:8081/api`
+Base URL (default for this project): `http://localhost:8081/api`
 
 ## Endpoints
 
 ### GET /horarios/disponibles
-- Descripción: Devuelve una lista de horarios disponibles (futuros y con `estaDisponible=true`).
-- Respuesta: `200 OK` con `List<HorarioResponse>`.
+- **Description:** Returns a list of available schedules (future ones with `estaDisponible=true`).
+- **Response:** `200 OK` with `List<HorarioResponse>`.
 
-HorarioResponse (JSON):
+**HorarioResponse (JSON):**
 ```json
 {
   "horarioId": 123,
@@ -23,10 +23,10 @@ HorarioResponse (JSON):
 ----
 
 ### POST /citas
-- Descripción: Crea una nueva cita (agendar). Valida horario y paciente.
-- Request: `AgendarCitaRequest` (JSON)
+- **Description:** Creates a new appointment (booking). Validates schedule and patient.
+- **Request:** `AgendarCitaRequest` (JSON)
 
-Ejemplo:
+**Example:**
 ```json
 {
   "nombre": "María Pérez",
@@ -38,58 +38,58 @@ Ejemplo:
 }
 ```
 
-- Respuesta:
-  - `201 Created` con la entidad `Cita` (mapeada por el servicio) en caso de éxito.
-  - `409 Conflict` con mensaje en caso de que el horario no esté disponible u ocurra un conflicto.
+- **Response:**
+  - `201 Created` with the `Cita` entity (mapped by the service) on success.
+  - `409 Conflict` with a message if the schedule is not available or a conflict occurs.
 
-Nota: el servicio intenta enviar un correo de confirmación pero NO aborta la operación si falla el envío.
+**Note:** The service attempts to send a confirmation email but does *not* abort the operation if email sending fails.
 
 ----
 
 ### POST /citas/buscar
-- Descripción: Buscar citas por `email` y `nombre`.
-- Request: `BuscarCitaRequest`:
+- **Description:** Search appointments by `email` and `nombre`.
+- **Request:** `BuscarCitaRequest`:
 ```json
 { "email": "maria@example.com", "nombre": "María Pérez" }
 ```
-- Respuesta: `200 OK` con `List<CitaResponse>`.
+- **Response:** `200 OK` with `List<CitaResponse>`.
 
 ----
 
 ### POST /solicitudes/reprogramar
-- Descripción: Crear una solicitud de reprogramación para una cita existente.
-- Request: `ReprogramacionRequest`:
+- **Description:** Create a rescheduling request for an existing appointment.
+- **Request:** `ReprogramacionRequest`:
 ```json
 { "citaId": 1, "motivo": "Cambio de horario", "explicacion": "Motivo..." }
 ```
-- Respuesta: `201 Created` con la entidad `Reprogramacion`.
+- **Response:** `201 Created` with the `Reprogramacion` entity.
 
 ----
 
 ### POST /solicitudes/aprobar
-- Descripción: Aprobar una solicitud de reprogramación y asignar un nuevo horario.
-- Request: `AprobarReprogramacionRequest`:
+- **Description:** Approve a rescheduling request and assign a new schedule.
+- **Request:** `AprobarReprogramacionRequest`:
 ```json
 { "solicitudId": 10, "nuevoHorarioId": 200 }
 ```
-- Respuesta:
-  - `200 OK` con la entidad `Reprogramacion` actualizada.
-  - `409 Conflict` si el nuevo horario no puede reservarse.
+- **Response:**
+  - `200 OK` with the updated `Reprogramacion` entity.
+  - `409 Conflict` if the new schedule cannot be reserved.
 
 ----
 
 ### POST /test/email
-- Descripción: Endpoint de pruebas para enviar un correo con datos de ejemplo. No persiste nada.
-- Request: `TestEmailRequest`:
+- **Description:** Test endpoint to send an email with example data. Does not persist anything.
+- **Request:** `TestEmailRequest`:
 ```json
-{ "nombre": "Prueba", "email": "test@example.com", "fecha": "2025-12-05T09:00:00+00:00", "motivo": "Confirmación" }
+{ "nombre": "Test", "email": "test@example.com", "fecha": "2025-12-05T09:00:00+00:00", "motivo": "Confirmation" }
 ```
-- Respuesta: `200 OK` o `400 Bad Request` si falta `email`.
+- **Response:** `200 OK` or `400 Bad Request` if `email` is missing.
 
 ----
 
-## Notas sobre formatos
-- Fechas en DTOs del frontend: `fechaHoraInicio` es un string ISO con zona (`OffsetDateTime.toString()` en Java).
-- `fechaNacimiento` en `AgendarCitaRequest` es `YYYY-MM-DD` (LocalDate).
+## Notes on Formats
+- Dates in frontend DTOs: `fechaHoraInicio` is an ISO string with offset (`OffsetDateTime.toString()` in Java).
+- `fechaNacimiento` in `AgendarCitaRequest` uses `YYYY-MM-DD` (LocalDate).
 
-**Fin del resumen API.**
+**End of API summary.**
