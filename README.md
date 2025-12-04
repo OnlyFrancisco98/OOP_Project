@@ -63,6 +63,6 @@ Design and abstraction models of the system.
 ### Resources
 
 * [Rúbrica](#)
-* [Video](#)
+* [Video](https://drive.google.com/file/d/1oaKZo8NASnfySeM8NOIvCIkjc4FRVn7y/view?usp=sharing)
 
 ---
