@@ -5,20 +5,22 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Solicitud de Cita - Clínica Psicológica</title>
     <style>
+            
+            a { color: inherit;text-decoration: none;}
             .material-style-select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem; background: #fff; transition: border-color 0.3s, box-shadow 0.3s; appearance: none; }
             .material-style-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2); outline: none; }
-            :root { --primary-color: #4A90E2; --secondary-color: #2C3E50; --background-color: #F8F9FA; --text-color: #333; }
+            :root { --primary-color: #4A90E2; --secondary-color: #2C3E50; --repcolor: #5e4b8b; --background-color: #F8F9FA; --text-color: #333; }
             * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
             body { background-color: var(--background-color); color: var(--text-color); }
             .container { display: flex; gap: 30px; max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-            .form-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+            .form-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(21, 33, 73, 0.619); }
             h1 { color: var(--secondary-color); margin-bottom: 15px; font-size: 2em; }
             .subtitle { color: #666; margin-bottom: 30px; font-style: italic; }
             .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 25px; }
             .full-width { grid-column: 1 / -1; }
             label { display: block; margin-bottom: 10px; font-weight: 500; color: var(--secondary-color); }
-            input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; transition: all 0.3s ease; }
-            input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); outline: none; }
+            input { width: 100%; padding: 12px; border: 1px solid #0084ff; border-radius: 8px; font-size: 1em; transition: all 0.3s ease; }
+            input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(1, 255, 221, 0.268); outline:  none; }
             small { display: block; color: #666; font-size: 0.85em; margin-top: 5px; }
             .calendar-section { flex: 1; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
             .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
@@ -32,15 +34,60 @@
             .calendar-date:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
             .calendar-date.selected { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
             .disabled { background: #f8f8f8; color: #ccc; cursor: not-allowed; }
-            .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-            .time-slot { padding: 12px; border: 1px solid #eee; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
-            .time-slot:hover { border-color: var(--primary-color); color: var(--primary-color); }
-            .time-slot.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+            /* Estilo para días CON horarios disponibles de la BD */
+            .calendar-date.available { background: linear-gradient(135deg, #e8f4fd 0%, #d4e9fc 100%); border: 2px solid var(--primary-color); color: var(--secondary-color); font-weight: 600; box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15); }
+            .calendar-date.available:hover { background: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); }
+            .calendar-date.available.selected { background: var(--secondary-color); border-color: var(--secondary-color); }
+            .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; align-items: stretch; }
+            /* visually improved time-slot */
+            .time-slot {
+                padding: 14px 12px;
+                border-radius: 14px;
+                text-align: center;
+                cursor: pointer;
+                transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                background: linear-gradient(180deg, #c5fff3 0%, #c5fff3 100%);
+                border: 1px solid rgba(66, 107, 153, 0.545);
+                box-shadow: 0 2px 6px rgba(15, 23, 42, 0.433);
+                color: var(--secondary-color);
+                min-height: 70px;
+            }
+            .time-slot:hover { transform: translateY(-6px); box-shadow: 0 8px 22px rgba(34, 47, 62, 0.12); }
+            .time-slot .slot-date { font-size: 0.78rem; color: #64748b; text-transform: capitalize; }
+            .time-slot .slot-time { font-size: 1.05rem; font-weight: 700; color: var(--secondary-color); }
+            .time-slot .slot-meta { font-size: 0.75rem; color: #9aa6b2; }
+            .time-slot.selected { background: linear-gradient(90deg, #4A90E2 0%, #357ABD 100%); color: white; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 10px 30px rgba(53,122,189,0.28); transform: translateY(-6px) scale(1.02); }
+            @media (max-width: 900px) { .time-slots { grid-template-columns: repeat(2, 1fr); } }
+            /* UI for no slots */
+            .no-slots-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: linear-gradient(180deg,#fff 0,#fafafa 100%);
+                border-radius: 12px;
+                padding: 18px;
+                border: 1px dashed rgba(100,100,120,0.12);
+                color: #556475;
+                box-shadow: 0 4px 12px rgba(20,30,50,0.04);
+            }
+            .no-slots-card h4 { margin: 0; color: #2c3e50; font-size: 1.05rem; }
+            .no-slots-card p { margin: 0; color: #6f8496; font-size: 0.9rem; }
+            .no-slots-actions { display:flex; gap:8px; margin-top:8px; }
+            .no-slots-actions .btn { padding: 8px 12px; background: #4A90E2; color: #fff; border-radius: 10px; border: none; cursor: pointer; }
+            .no-slots-actions .btn.alt { background: transparent; color: #4A90E2; border: 1px solid rgba(74,144,226,0.15); }
             .button-group { display: flex; gap: 15px; margin-top: 30px; }
             .main-button { padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; flex: 1; }
             .submit-button { background: var(--primary-color); color: white; }
             .submit-button:hover { background: var(--secondary-color); }
-            .cancel-button { background: #e74c3c; color: white; }
+            .cancel-button { background: #bc4538; color: white; }
+            .cancel-button:hover{background: #632121e0;}
             @media (max-width: 768px) { .container { flex-direction: column; margin: 20px auto; } .form-grid { grid-template-columns: 1fr; } .calendar-grid { grid-template-columns: repeat(7, 1fr); } .time-slots { grid-template-columns: repeat(2, 1fr); } }
             @keyframes modalEntry { 0% { transform: scale(0.8) translateY(50px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
             @keyframes checkmarkAnim { 0% { stroke-dashoffset: 48; } 100% { stroke-dashoffset: 0; } }
@@ -57,6 +104,10 @@
             .credentials { background: #f8f9fa; padding: 1rem; border-radius: 0.8rem; margin: 1.2rem 0; font-size: 0.9rem; }
             .modal-button { background: #4a90e2; color: white; border: none; padding: 0.8rem 2rem; border-radius: 2rem; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; }
             .modal-button:hover { background: #357ABD; transform: translateY(-2px); }
+            .reprogramar { padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; flex: 1; }
+            .reprogramar-btn { background: var(--repcolor); color: white; }
+            .reprogramar-btn:hover{ background: #463371;}
+            .reprogramar-cita{ display: flex; gap: 15px; margin-top: 30px; }
             @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             @media (max-width: 480px) { .modal-content { padding: 1.5rem; border-radius: 1rem; } .modal-title { font-size: 1.4rem; } }
     </style>
@@ -85,12 +136,12 @@
 
                 <label>
                     Correo electrónico
-                    <input required type="email" id="email">
+                    <input placeholder="tucorreo@correo.com" type="email" id="email">
                 </label>
 
                 <label>
                     Teléfono
-                    <input pattern="[0-9]{10}" required type="tel" id="telefono">
+                    <input pattern="[0-9]{10}" maxlength="10" minlength="10" placeholder="Ej: 9991234567" required type="tel" id="telefono">
                     <small>10 dígitos sin espacios</small>
                 </label>
 
@@ -110,23 +161,28 @@
                 <button class="main-button cancel-button" type="reset">Limpiar</button>
             </div>
             <br>
-            <div>
-                <a href="reprogramar.html">Reprogramar Cita</a>
+            <div class="reprogramar-cita">
+                <button class="reprogramar reprogramar-btn" type="button"><a href="reprogramar.html">Reprogramar Cita</a></button>
+                
             </div>
         </form>
     </div>
 
     <div class="calendar-section">
         <div class="calendar-header">
-            <span class="current-month">Horarios Disponibles</span>
+            <button class="nav-button" id="prevMonth" type="button">‹</button>
+            <span class="current-month" id="monthDisplay">Diciembre 2024</span>
+            <button class="nav-button" id="nextMonth" type="button">›</button>
         </div>
         
-        <p>Por favor, selecciona un horario de la lista:</p>
-        
-        <div class="time-slots" id="timeSlotsContainer">
-            <p>Cargando horarios...</p>
-        </div>
-    </div>
+         <div class="calendar-grid" id="calendarGrid">
+             <!-- Se llenará dinámicamente con JS -->
+          </div>
+          
+          <div class="time-slots" id="timeSlotsContainer">
+              <p>Cargando horarios...</p>
+          </div>
+      </div>
 </div>
 
 <div class="modal" id="confirmationModal">
@@ -158,90 +214,261 @@
 
     // Estado global
     let selectedHorarioId = null;
+    let useMock = false;
+    let allHorarios = []; 
+    let currentMonth = new Date(); 
+    let selectedDateForSlots = null; 
+    let backendConnected = false; 
 
-    // Al cargar la página, buscar los horarios
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarHorariosDisponibles();
-    });
-
-    /**
-     * Formatea una fecha ISO (ej. 2025-12-01T09:00:00Z) a un formato legible
-     */
-    function formatarFechaHora(isoString) {
-        const date = new Date(isoString);
-        const options = {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        };
-        return date.toLocaleString('es-ES', options);
+    // Datos de prueba
+    function loadMockSlots() {
+        const baseDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 5);
+        const slots = [];
+        for (let day = 0; day < 3; day++) {
+            const dayDate = new Date(baseDate);
+            dayDate.setDate(baseDate.getDate() + day); 
+            dayDate.setHours(9, 0, 0, 0); 
+            for (let slot = 0; slot < 3; slot++) {
+                slots.push({
+                    horarioId: `m${day * 3 + slot + 1}`,
+                    fechaHoraInicio: new Date(dayDate.getTime() + slot * 90 * 60000).toISOString(),
+                    duracionMinutos: 50
+                });
+            }
+        }
+        return slots;
     }
 
-    /**
-     * 1. Llama al endpoint GET /api/horarios/disponibles
-     * (URL CORREGIDA)
-     */
+    // Renderiza el calendario
+    function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+        
+        const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab'];
+        daysOfWeek.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'calendar-day';
+            dayHeader.textContent = day;
+            grid.appendChild(dayHeader);
+        });
+        
+        const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+        const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+        const startingDayOfWeek = firstDay.getDay();
+        
+        for (let i = 0; i < startingDayOfWeek; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-date disabled';
+            grid.appendChild(emptyCell);
+        }
+        
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const dateCell = document.createElement('div');
+            dateCell.className = 'calendar-date';
+            dateCell.textContent = day;
+            
+            const cellDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+            const dateStr = cellDate.toISOString().split('T')[0];
+            
+            const hasSchedule = allHorarios.some(h => {
+                if (!h.fechaHoraInicio) return false;
+                const horarioDate = h.fechaHoraInicio.split('T')[0];
+                return horarioDate === dateStr;
+            });
+            
+            if (!hasSchedule) {
+                dateCell.classList.add('disabled');
+            }
+            
+            if (selectedDateForSlots && selectedDateForSlots === dateStr) {
+                dateCell.classList.add('selected');
+            }
+            
+            dateCell.addEventListener('click', () => {
+                if (!dateCell.classList.contains('disabled')) {
+                    selectDateInCalendar(dateStr);
+                }
+            });
+            
+            grid.appendChild(dateCell);
+        }
+        
+        const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+        document.getElementById('monthDisplay').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    }
+
+    // Selecciona fecha y filtra
+    function selectDateInCalendar(dateStr) {
+        selectedDateForSlots = dateStr;
+        renderCalendar(); 
+        filterAndRenderSlots(dateStr); 
+    }
+
+    // Filtra horarios por fecha
+    function filterAndRenderSlots(dateStr) {
+        const container = document.getElementById('timeSlotsContainer');
+        const slotsForDate = allHorarios.filter(h => {
+            if (!h.fechaHoraInicio) return false;
+            const horarioDate = h.fechaHoraInicio.split('T')[0];
+            return horarioDate === dateStr;
+        });
+        
+        if (slotsForDate.length === 0) {
+            container.innerHTML = '<p style="color: #999; text-align: center;">No hay horarios para esta fecha.</p>';
+            return;
+        }
+        
+        renderTimeSlots(slotsForDate);
+    }
+
+    // Renderiza las tarjetas de tiempo
+    function renderTimeSlots(horarios) {
+        const container = document.getElementById('timeSlotsContainer');
+        container.innerHTML = '';
+        if (!horarios || horarios.length === 0) {
+            container.innerHTML = '<p>No hay horarios disponibles.</p>';
+            return;
+        }
+
+        horarios.forEach(horario => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot';
+            slot.setAttribute('role', 'button');
+            slot.setAttribute('tabindex', '0');
+
+            const dt = new Date(horario.fechaHoraInicio);
+            const dateShort = dt.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+            const timeShort = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const duration = horario.duracionMinutos ? `${horario.duracionMinutos} min` : '';
+
+            slot.innerHTML = `
+                <div class="slot-date">${dateShort}</div>
+                <div class="slot-time">${timeShort}</div>
+                <div class="slot-meta">${duration}</div>
+            `;
+
+            const selectSlot = () => {
+                selectedHorarioId = horario.horarioId;
+                document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+                slot.classList.add('selected');
+                const submitBtn = document.querySelector('.submit-button');
+                if (submitBtn) submitBtn.disabled = false;
+            };
+
+            slot.addEventListener('click', selectSlot);
+            slot.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    selectSlot();
+                }
+            });
+
+            container.appendChild(slot);
+        });
+    }
+
+    // Listeners iniciales
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarHorariosDisponibles();
+        
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            selectedDateForSlots = null;
+            renderCalendar();
+            document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
+        });
+        
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            selectedDateForSlots = null;
+            renderCalendar();
+            document.getElementById('timeSlotsContainer').innerHTML = '<p style="color: #999; text-align: center;">Selecciona una fecha para ver horarios disponibles.</p>';
+        });
+    });
+
+    // --- AQUÍ ESTÁ LA CORRECCIÓN PRINCIPAL ---
     async function cargarHorariosDisponibles() {
         const container = document.getElementById('timeSlotsContainer');
+        const submitBtn = document.querySelector('.submit-button');
+        if (submitBtn) submitBtn.disabled = true;
+
         try {
-            // URL CORREGIDA:
+            console.log(`Conectando al backend en: ${API_BASE_URL}/horarios/disponibles`);
             const response = await fetch(`${API_BASE_URL}/horarios/disponibles`);
             
             if (!response.ok) {
-                throw new Error('No se pudieron cargar los horarios.');
+                throw new Error(`Backend respondió con ${response.status}`);
             }
             const horarios = await response.json();
+            console.log('Horarios recibidos del backend:', horarios);
             
-            container.innerHTML = ''; // Limpiar el "Cargando..."
+            allHorarios = Array.isArray(horarios) ? horarios : [];
+            backendConnected = true;
 
-            if (horarios.length === 0) {
-                 container.innerHTML = '<p>No hay horarios disponibles por el momento.</p>';
-                 return;
-            }
-
-            // 2. Renderiza cada horario como un botón
-            horarios.forEach(horario => {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                slot.textContent = formatarFechaHora(horario.fechaHoraInicio);
-                
-                // 3. Agrega un listener para seleccionar el horario
-                slot.addEventListener('click', () => {
-                    // Guardar el ID
-                    selectedHorarioId = horario.horarioId;
-                    
-                    // Resaltar visualmente
-                    document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
-                    slot.classList.add('selected');
+            if (!Array.isArray(horarios) || horarios.length === 0) {
+                // Caso: No hay horarios en la BD
+                renderTimeSlots([]);
+                container.innerHTML = `
+                    <div class="no-slots-card" role="status" aria-live="polite">
+                        <h4>Sin horarios disponibles</h4>
+                        <p>No hay horarios disponibles en la base de datos.</p>
+                        <div class="no-slots-actions">
+                            <button class="btn" id="refreshSlotsBtn" type="button">Reintentar</button>
+                            <button class="btn alt" id="useMockBtn" type="button">Usar datos de prueba</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('refreshSlotsBtn').addEventListener('click', () => cargarHorariosDisponibles());
+                document.getElementById('useMockBtn').addEventListener('click', () => {
+                    useMock = true;
+                    allHorarios = loadMockSlots();
+                    renderCalendar();
+                    // Aquí tampoco mostramos todo de golpe en modo mock, pedimos seleccionar
+                    container.innerHTML = '<p style="text-align:center; color:#666;">Selecciona un día disponible (azul) para ver las horas.</p>';
                 });
-                
-                container.appendChild(slot);
-            });
+            } else {
+               // CORRECCIÓN: Antes llamabas a renderTimeSlots(horarios) aquí.
+               // Ahora limpiamos el contenedor para esperar la selección del usuario.
+               container.innerHTML = ''; 
+            }
+            
+            // Renderizamos el calendario para que se pinten los días disponibles (azules)
+            renderCalendar();
 
         } catch (error) {
-            console.error('Error:', error);
-            container.innerHTML = '<p style="color: red;">Error al cargar horarios. Asegúrate que el backend esté corriendo.</p>';
+            console.error('Error al conectar con backend:', error);
+            backendConnected = false;
+            container.innerHTML = `
+                <div class="no-slots-card" role="alert" aria-live="assertive">
+                    <h4>Error al cargar horarios</h4>
+                    <p>No se pudo conectar con el backend.</p>
+                    <div class="no-slots-actions">
+                        <button class="btn" id="retryBtn" type="button">Reintentar</button>
+                        <button class="btn alt" id="useMockBtnError" type="button">Usar datos de prueba</button>
+                    </div>
+                </div>
+            `;
+            const retryBtn = document.getElementById('retryBtn');
+            if (retryBtn) retryBtn.addEventListener('click', () => cargarHorariosDisponibles());
+            const useMockBtn = document.getElementById('useMockBtnError');
+            if (useMockBtn) useMockBtn.addEventListener('click', () => {
+                useMock = true;
+                allHorarios = loadMockSlots();
+                renderCalendar();
+                container.innerHTML = '<p style="text-align:center; color:#666;">Selecciona un día disponible para ver las horas.</p>';
+            });
         }
     }
 
-
-    /**
-     * 4. Llama al endpoint POST /api/citas al enviar el formulario
-     * (URL CORREGIDA)
-     */
+    // Envío del formulario
     document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // Validar que se seleccionó un horario
         if (!selectedHorarioId) {
             alert('Por favor selecciona un horario disponible.');
             return;
         }
 
-        // 1. Recolectar TODOS los datos del formulario
         const requestData = {
             nombre: document.getElementById('nombre').value,
             email: document.getElementById('email').value,
@@ -251,56 +478,42 @@
             motivoConsulta: document.getElementById('motivo').value
         };
 
-
-        // 2. Enviar la petición POST
         try {
-            // URL CORREGIDA:
             const response = await fetch(`${API_BASE_URL}/citas`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
 
-            // Si la respuesta NO fue exitosa (ej. 409, 404, 500)
             if (!response.ok) {
-                // Leemos el mensaje de error que envió el backend
                 const errorMessage = await response.text(); 
-                // Lanzamos un error con ESE mensaje
-                throw new Error(errorMessage || 'El horario ya no está disponible o hubo un error.'); 
+                throw new Error(errorMessage || 'Error al agendar.'); 
             }
 
             const citaAgendada = await response.json();
-            console.log('Cita agendada:', citaAgendada);
-
-            // 3. Mostrar el modal de éxito
+            
             const modal = document.getElementById('confirmationModal');
-            document.getElementById('temp-email').textContent = citaAgendada.paciente.email; 
+            document.getElementById('temp-email').textContent = citaAgendada.paciente ? citaAgendada.paciente.email : document.getElementById('email').value; 
             
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
 
-            // Reiniciar animaciones del modal
             document.querySelectorAll('.checkmark__circle, .checkmark__check').forEach(el => {
                 el.style.animation = 'none';
-                void el.offsetWidth; // Trigger reflow
+                void el.offsetWidth; 
                 el.style.animation = null;
             });
 
         } catch (error) {
             console.error('Error al agendar:', error);
-            // Ahora el alert mostrará el error real del backend
             alert(`Error al agendar: ${error.message}`); 
         }
     });
 
-    // Lógica para cerrar el modal
     document.getElementById('modalClose').addEventListener('click', function () {
         document.getElementById('confirmationModal').classList.remove('show');
         setTimeout(() => {
             document.getElementById('confirmationModal').style.display = 'none';
-            // Recargar la página para ver los horarios actualizados
             window.location.reload(); 
         }, 300);
     });

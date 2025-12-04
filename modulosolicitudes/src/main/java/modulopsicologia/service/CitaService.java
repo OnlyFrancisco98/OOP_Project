@@ -27,6 +27,8 @@ public class CitaService {
     private PacienteService pacienteService;
     @Autowired
     private HorarioService horarioService;
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public Cita agendarCita(AgendarCitaRequest request){
@@ -34,6 +36,13 @@ public class CitaService {
         Horario horario = horarioService.validarHorario(request.getHorarioId());
         Cita citaGuardada = crearCita(request, paciente, horario);
         horarioService.marcarHorarioComoOcupado(horario);
+        // Ensure patient has a temporary password and send confirmation email
+        String contrasenaTemporal = pacienteService.asegurarContrasenaTemporal(paciente);
+        try{
+            emailService.enviarConfirmacionCita(paciente, citaGuardada, contrasenaTemporal);
+        } catch(RuntimeException e){
+            System.err.println("[EmailService] Error al enviar correo de confirmacion: " + e.getMessage());
+        }
         return citaGuardada;
     }
 
@@ -42,6 +51,7 @@ public class CitaService {
         nuevaCita.setPaciente(paciente);
         nuevaCita.setHorario(horario);
         nuevaCita.setMotivoConsulta(request.getMotivoConsulta());
+        System.out.println("INTENTANDO GUARDAR CITA..." + nuevaCita.toString());
         return citaRepository.save(nuevaCita);
     }
 
@@ -67,8 +77,6 @@ public class CitaService {
             throw new RuntimeException("Cita no encontrada con ID: " + id);
         }
     }
-
-    // Hecho con gemini 
     
     private CitaResponse convertirACitaResponse(Cita cita) {
         CitaResponse dto = new CitaResponse();
@@ -87,7 +95,7 @@ public class CitaService {
         // Mapeo del Horario
         HorarioResponse horarioDto = new HorarioResponse();
         horarioDto.setHorarioId(cita.getHorario().getHorarioId());
-        horarioDto.setFechaHoraInicio(cita.getHorario().getFechaHoraInicio());
+        horarioDto.setFechaHoraInicio(cita.getHorario().getFechaHoraInicio().toString());
         horarioDto.setDuracionMinutos(cita.getHorario().getDuracionMinutos());
         horarioDto.setEstaDisponible(cita.getHorario().isEstaDisponible());
         dto.setHorario(horarioDto);

@@ -1,13 +1,13 @@
 package modulopsicologia.dto;
 
 import lombok.Data;
-import java.time.OffsetDateTime;
 
-// Un DTO simple para mostrar el horario
+// Un DTO simple para mostrar el horario al frontend
 @Data
 public class HorarioResponse {
     private Long horarioId;
-    private OffsetDateTime fechaHoraInicio;
+    // Enviar fecha como string ISO para evitar problemas de serialización/parseo en JS
+    private String fechaHoraInicio;
     private Integer duracionMinutos;
     private boolean estaDisponible;
 }

@@ -17,7 +17,7 @@ public class Horario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "horario_id")
+    @Column(name = "horario_id", nullable = false)
     private Long horarioId;
 
     @Column(name = "fecha_hora_inicio", nullable = false)

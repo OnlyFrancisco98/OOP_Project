@@ -1,0 +1,102 @@
+# -----------------------------
+# Global / repo-level gitignore
+# Protect secrets, build artifacts, and OS/IDE cruft
+# -----------------------------
+
+# --- Java / Maven ---
+target/
+**/target/
+**/target/**
+.mvn/wrapper/maven-wrapper.jar
+!**/mvnw
+!**/mvnw.cmd
+
+# compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Eclipse/IntelliJ/VSCode
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs / runtime data ---
+*.log
+logs/
+*.pid
+
+# --- Build and coverage ---
+*/build/
+*/out/
+*.class
+*.log
+coverage/
+*.exec
+
+# --- Secrets / Credentials / Environment ---
+# Common env files
+.env
+.env.*
+env.local
+
+# Mail and credential files (keep secrets locally only)
+**/application-mail.properties
+**/application-mail.*
+
+# Application-level properties that may contain DB passwords or secrets
+# NOTE: This will ignore any application.properties in source/target directories; keep an example file instead
+**/src/**/resources/application.properties
+**/target/classes/application.properties
+**/target/classes/application-*.properties
+
+# Any local secret files or credentials
+*.secret
+*.secrets
+secrets/
+credentials/
+**/*credentials*.*
+
+# Keystores, certificates and keys
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.crt
+*.key
+
+# Database dumps (can contain credentials)
+*.sql
+*.dump
+*.sqlite
+*.db
+
+# IDE run configs that may contain services/keys
+runConfigurations/
+
+# --- Containers / images ---
+docker-compose.override.yml
+Dockerfile.*
+
+# --- Misc ---
+*.swp
+*~
+~$*
+*.bak
+*.tmp
+
+# If you add anything secret during development, add it here or in a module-specific ignore.
+# IMPORTANT: If any secret was already committed to git history, please follow the cleanup steps below
