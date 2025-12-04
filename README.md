@@ -244,5 +244,5 @@ OOP_Project
 ### Resources
 
 * [Rúbrica](#)
-* [Video](#)
+* [Video](https://drive.google.com/file/d/1oaKZo8NASnfySeM8NOIvCIkjc4FRVn7y/view?usp=sharing)
 >>>>>>> a9a50a6567da3f12a39166c8d641872472998e86
